@@ -18,7 +18,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -39,13 +39,13 @@ android {
     }
 
     makeJar.dependsOn(build)*/
-    task makeJar(type: ProGuardTask, dependsOn: "build") {
+    /*task makeJar(type: ProGuardTask, dependsOn: "build") {
         //删除存在的
         delete 'libs/advertise_sdk.jar'
         injars 'build/intermediates/intermediate-jars/release/classes.jar' // 未混淆的jar路径
         outjars 'libs/advertise_sdk.jar' // 混淆后的jar输出路径
         configuration 'proguard-rules.pro' // 混淆协议
-    }
+    }*/
 
 
 }
