@@ -1,0 +1,56 @@
+import proguard.gradle.ProGuardTask
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.heaton.aicareles'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 2
+        versionName "1.0.2"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /*task makeJar(type: Copy) {
+        //删除存在的
+        delete 'build/libs/advertise_sdk.jar'
+        //设置拷贝的文件
+        from('build/intermediates/intermediate-jars/release')
+        //打进jar包后的文件目录
+        into('libs/')
+        //将classes.jar放入build/libs/目录下
+        //include ,exclude参数来设置过滤
+        //（我们只关心classes.jar这个文件）
+        include('classes.jar')
+        //重命名
+        rename ('classes.jar', 'advertise_sdk.jar')
+    }
+
+    makeJar.dependsOn(build)*/
+    task makeJar(type: ProGuardTask, dependsOn: "build") {
+        //删除存在的
+        delete 'libs/advertise_sdk.jar'
+        injars 'build/intermediates/intermediate-jars/release/classes.jar' // 未混淆的jar路径
+        outjars 'libs/advertise_sdk.jar' // 混淆后的jar输出路径
+        configuration 'proguard-rules.pro' // 混淆协议
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+}

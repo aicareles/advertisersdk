@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">公版2.4G Demo</string>
+    <string name="btn_sure">确定</string>
+    <string name="btn_cancel">取消</string>
+    <string name="scan">扫描</string>
+    <string name="connect">连接</string>
+    <string name="connect_title">设备列表</string>
+    <string name="connecting">连接中...</string>
+    <string name="connect_success">连接成功</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="connect_timeout">连接超时!</string>
+</resources>

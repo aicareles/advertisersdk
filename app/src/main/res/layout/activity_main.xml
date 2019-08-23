@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.com.heaton.avertisetest.MainActivity">
+
+    <EditText
+        android:id="@+id/et_prefixname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="设备前缀,如：BXC-"/>
+
+    <EditText
+        android:id="@+id/et_productcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_prefixname"
+        android:hint="设备产品码,如：0x54, 0x00, 0x11"/>
+
+    <EditText
+        android:id="@+id/et_blechannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_below="@+id/et_productcode"
+        android:hint="发码通道,如：37/38/39"/>
+
+    <EditText
+        android:id="@+id/et_blepayload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_blechannel"
+        android:hint="广播负载数据"/>
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_blepayload"
+        android:text="发送"/>
+
+    <Button
+        android:id="@+id/scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="扫描"/>
+
+</RelativeLayout>
