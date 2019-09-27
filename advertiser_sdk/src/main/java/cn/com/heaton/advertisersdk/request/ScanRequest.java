@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.heaton.advertisersdk.AdvertiserDevice;
+import cn.com.heaton.advertisersdk.AdvertiserFactory;
 import cn.com.heaton.advertisersdk.AdvertiserHandler;
 import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
@@ -117,7 +118,7 @@ public class ScanRequest<T extends AdvertiserDevice> {
             T avertiseDevice = getDevice(device.getAddress());
             if (avertiseDevice == null) {
 //                avertiseDevice = (T) AdvertiserFactory.create(AdvertiserDevice.class, device);
-                avertiseDevice = (T) new AdvertiserDevice(device);
+                avertiseDevice = AdvertiserFactory.newDevice(device);
                 mScanDevices.add(avertiseDevice);
             }
             mParseRequest.parseScanRecord(avertiseDevice, scanRecord, mScanCallback);

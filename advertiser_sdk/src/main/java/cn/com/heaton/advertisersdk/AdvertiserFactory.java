@@ -35,4 +35,8 @@ public class AdvertiserFactory<T extends AdvertiserDevice> {
         throw new ClassCastException("Class must implements AdvertiserDevice");
     }
 
+    public static <T extends AdvertiserDevice> T newDevice(BluetoothDevice device) {
+        return (T) new AdvertiserDevice(device);
+    }
+
 }
