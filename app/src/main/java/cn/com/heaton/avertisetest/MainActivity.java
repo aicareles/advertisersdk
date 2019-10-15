@@ -8,12 +8,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.view.MotionEvent;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import cn.com.heaton.advertisersdk.AdvertiserClient;
-import cn.com.heaton.avertisetest.app.Protocol;
+import cn.com.heaton.advertisersdk.AdvertiserDevice;
+import cn.com.heaton.advertisersdk.AdvertiserLog;
+import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
+import cn.com.heaton.advertisersdk.utils.ByteUtils;
+import cn.com.heaton.avertisetest.adapter.SendAdvertiserAdapter;
 import cn.com.heaton.avertisetest.base.BaseActivity;
+import cn.com.heaton.avertisetest.model.SendRecord;
 
 /**
  * description $desc$
@@ -22,9 +41,21 @@ import cn.com.heaton.avertisetest.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
+    private static final String TAG = "MainActivity";
     public static final int REQUEST_ENABLE_BT = 1;
-    private ConnectDialog mConnectDialog;
     private Handler mHandler = new Handler();
+    private EditText et_delay, et_duration, et_address_code, et_payload, et_filter;
+    private Button btn_send;
+    private ImageView iv_scan;
+    private ListView lv_send, lv_receive;
+    private SendAdvertiserAdapter sendAdvertiserAdapter;
+    private List<SendRecord> sendRecords;
+
+    private SendAdvertiserAdapter receiveAdvertiserAdapter;
+    private List<SendRecord> receiveAllRecords;
+    private List<SendRecord> receiveFilterRecords;
+
+    private AdvertiserClient<AdvertiserDevice> mClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,59 +64,114 @@ public class MainActivity extends BaseActivity {
 
         initView();
 
+        initData();
+
+        initLinsenter();
+
         checkBLEStatus();
 
-        findViewById(R.id.scan).setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initData() {
+        mClient = AdvertiserClient.getDefault();
+        sendRecords = new ArrayList<>();
+        sendAdvertiserAdapter = new SendAdvertiserAdapter(this, sendRecords);
+        lv_send.setAdapter(sendAdvertiserAdapter);
+
+        receiveAllRecords = new ArrayList<>();
+        receiveFilterRecords = new ArrayList<>();
+        receiveAdvertiserAdapter = new SendAdvertiserAdapter(this, receiveFilterRecords);
+        lv_receive.setAdapter(receiveAdvertiserAdapter);
+    }
+
+    private void initLinsenter() {
+        iv_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mConnectDialog == null){
-                    mConnectDialog = new ConnectDialog(MainActivity.this, R.style.dialog);
-                    mConnectDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            AdvertiserClient.getDefault().stopScan();
-                        }
-                    });
-                    mConnectDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                        @Override
-                        public void onShow(DialogInterface dialogInterface) {
-                            mConnectDialog.scan();
-                        }
-                    });
-                }
-                mConnectDialog.show();
+                mClient.startScan(scanCallback);
             }
         });
-
-        findViewById(R.id.btn_send).setOnTouchListener(new View.OnTouchListener() {
+        btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: //手指按下
-                        Protocol.getInstance().sendCommand(null,new byte[]{}, 37);
-                        break;
-                    case MotionEvent.ACTION_UP: //手指抬起
-                    case MotionEvent.ACTION_CANCEL: //手指抬起  取消
-//                        Protocol.getInstance().stopCommand(37);
-                        AdvertiserClient.getDefault().stopAdvertising();
-                        break;
+            public void onClick(View view) {
+                String payload = et_payload.getText().toString();
+                if (!TextUtils.isEmpty(payload)){
+                    String hexPayload = payload.replaceAll(" ","");
+                    if (hexPayload.length() != 32){
+                        Toast.makeText(MainActivity.this, "长度必须是16个byte", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    byte[] bytes = ByteUtils.hexStrToByteArray(hexPayload);
+                    mClient.startAdvertising(bytes);
+                    mClient.stopAdvertising(Long.parseLong(et_duration.getText().toString()));
+                    addSendRecordToList(payload);
                 }
-                return false;
             }
         });
 
+        et_filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String filter = editable.toString().replaceAll(" ", "");
+                filterReceive(filter);
+            }
+        });
+    }
+
+    //添加一条广播记录到list列表
+    private void addSendRecordToList(String payload) {
+        SendRecord sendRecord = new SendRecord();
+        sendRecord.setHexPayload(payload);
+        DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
+        sendRecord.setTime(df.format(new Date()));
+        sendRecords.add(sendRecord);
+        sendAdvertiserAdapter.notifyDataSetChanged();
+    }
+
+    //添加一条广播扫描到的记录到list列表
+    private void addReceiveRecordToList(String payload) {
+        SendRecord sendRecord = new SendRecord();
+        sendRecord.setHexPayload(payload);
+        DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
+        sendRecord.setTime(df.format(new Date()));
+        //添加到所有列表
+        receiveAllRecords.add(sendRecord);
+        //添加到adapter
+        receiveFilterRecords.add(sendRecord);
+        receiveAdvertiserAdapter.notifyDataSetChanged();
+    }
+
+    private void filterReceive(String filterBytes){
+        Log.e(TAG, "filterReceive: "+filterBytes);
+        receiveFilterRecords.clear();
+        for (SendRecord sendRecord : receiveAllRecords){
+            String str = sendRecord.getHexPayload().replaceAll(" ", "");
+            if (str.contains(filterBytes)){
+                receiveFilterRecords.add(sendRecord);
+            }
+        }
+        receiveAdvertiserAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
-
+        et_delay = findViewById(R.id.et_delay);
+        et_duration = findViewById(R.id.et_duration);
+        et_address_code = findViewById(R.id.et_address_code);
+        et_payload = findViewById(R.id.et_payload);
+        et_filter = findViewById(R.id.et_filter);
+        iv_scan = findViewById(R.id.iv_scan);
+        btn_send = findViewById(R.id.btn_send);
+        lv_send = findViewById(R.id.lv_send);
+        lv_receive = findViewById(R.id.lv_receive);
     }
-
-    private Runnable mStopRunnable = new Runnable() {
-        @Override
-        public void run() {
-            AdvertiserClient.getDefault().stopAdvertising();
-        }
-    };
 
     private void checkBLEStatus() {
         // 检查设备是否打开蓝牙
@@ -125,10 +211,10 @@ public class MainActivity extends BaseActivity {
                 .setThroAvertiseException(true)
                 .setLogAvertiseExceptions(true)
                 .setPrefixAvertiseName("BXC-")
-                .setAvertiseProductCode(new byte[]{0x54, 0x00, 0x11})
-                .setAddressPrefix("54:52:22")
+                .setAvertiseProductCode(new byte[]{0x54, 0x00, 0x16})
+//                .setAddressPrefix("54:52:22")
                 .setConnectTimeout(8 * 1000)
-                .setScanPeriod(8 * 1000)
+                .setScanPeriod(30 * 1000)
                 .setRetryConnect(3)
                 .create(getApplication());
     }
@@ -143,4 +229,20 @@ public class MainActivity extends BaseActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private AdvertiserScanCallback<AdvertiserDevice> scanCallback = new AdvertiserScanCallback<AdvertiserDevice>() {
+
+        @Override
+        public void onParsedData(AdvertiserDevice device, byte[] parsedData) {
+            super.onParsedData(device, parsedData);
+            Log.e(TAG, "onParsedData: >>>>");
+            String hexString = ByteUtils.BinaryToHexString(parsedData);
+            addReceiveRecordToList(hexString);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+        }
+    };
 }

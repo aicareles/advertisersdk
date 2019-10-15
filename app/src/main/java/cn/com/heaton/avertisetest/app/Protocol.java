@@ -32,7 +32,7 @@ public class Protocol {
         return mFrameIndex > 255 ? mFrameIndex = 1 : mFrameIndex++;
     }
 
-    public void sendCommand(AdvertiserDevice device, byte[] data, int bleChannel) {
+    public void sendCommand(AdvertiserDevice device, byte[] data) {
         payload[0] = (byte) (new Random().nextInt(256) & 0xff);//随机数
         if (device != null) {
             byte[] rolling_code = device.getRollingCode();
@@ -47,7 +47,7 @@ public class Protocol {
         payload[4] = (byte) 0xC0;
         payload[5] = (byte) (getFrameIndex() & 0xff);
         //5、开启广播
-        AdvertiserClient.getDefault().startAdvertising(payload, bleChannel);
+        AdvertiserClient.getDefault().startAdvertising(payload);
     }
 
     public void stopCommand(int bleChannel) {

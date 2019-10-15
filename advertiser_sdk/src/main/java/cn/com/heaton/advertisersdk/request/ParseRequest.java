@@ -79,16 +79,6 @@ public class ParseRequest<T extends AdvertiserDevice> {
             if (retryCount < AdvertiserConfig.config().getConnectTimeout() / SINGLE_CONNECT_TIME) {
                 retryCount++;
                 AdvertiserLog.e(TAG, "正在第" + retryCount + "次重连");
-//                AdvertiserClient.getDefault().stopScan();
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //3、开始扫描
-//                        AdvertiserClient.getDefault().startScan();
-//                        AdvertiserRequest request = Rproxy.getProxy().getRequest(AdvertiserRequest.class);
-//                        request.retryConnect();
-//                    }
-//                }, 100);//500
                 AdvertiserRequest request = Rproxy.getProxy().getRequest(AdvertiserRequest.class);
                 request.retryConnect();
                 mHandler.postDelayed(this, SINGLE_CONNECT_TIME);
@@ -120,31 +110,25 @@ public class ParseRequest<T extends AdvertiserDevice> {
             byte[] buf = Arrays.copyOfRange(data, 2, data.length);
             if (buf.length != 16) return;
             //解密
-            WirelessEncoder.cipher(buf, false);
+//            WirelessEncoder.cipher(buf, false);
             if (scanCallback != null){
                 scanCallback.onParsedData(newDevice, buf);
             }
-            byte[] randomCode = AdvertiserConfig.generateRandom();
-            //把设备对象先放入2.4G设备池中
-            AdvertiserDevice device = takeDevicePool(newDevice);
+            AdvertiserLog.e(TAG, "parseScanRecord>>>>>: "+ByteUtils.byteArrayToHexStr(buf));
             byte[] avertiseProductCode = AdvertiserConfig.config().getAvertiseProductCode();
             if (buf[1] == avertiseProductCode[0] && buf[2] == avertiseProductCode[1] && buf[3] == avertiseProductCode[2]) {
-                byte[] rolling_code = new byte[3];
-                System.arraycopy(buf, 6, rolling_code, 0, rolling_code.length);
-                device.setRollingCode(rolling_code);
-                device.setRandomCode(randomCode);
-                device.setOn(buf[10] == 0x01);
-                String suffix = ByteUtils.BinaryToHexString(rolling_code).replaceAll(" ", "");
-                device.setBleName(AdvertiserConfig.config().getPrefixAvertiseName() + suffix);
-                AdvertiserLog.e(TAG, "parseScanRecord>>>>>: "+ByteUtils.byteArrayToHexStr(buf));
+                byte[] randomCode = AdvertiserConfig.generateRandom();
+                AdvertiserDevice device = takeDevicePool(newDevice);
                 if (buf[4] == 0x42) {//2.4G回复对码(对码模式)
                     if (mAvertiseDiscoverCallback != null) {
+                        setDeviceValue(device, buf);
                         device.setPairState(AdvertiserStates.StatusCode.UNPAIR);
                         mAvertiseDiscoverCallback.onAvertiseScan(device);
                         AdvertiserLog.e(TAG, "扫描到新设备" + device.toString());
                     }
                 } else if (buf[4] == 0x45 && buf[13] == randomCode[0] && buf[14] == randomCode[1] && buf[15] == randomCode[2]) {
                     if (mAvertiseDiscoverCallback != null) {
+                        setDeviceValue(device, buf);
                         device.setPairState(AdvertiserStates.StatusCode.PAIRED);
                         mAvertiseDiscoverCallback.onAvertiseScan(device);
                         AdvertiserLog.e(TAG, "设备已在线>>>>>" + device.toString());
@@ -152,51 +136,26 @@ public class ParseRequest<T extends AdvertiserDevice> {
                 } else if (buf[4] == 0x44 && buf[13] == randomCode[0] && buf[14] == randomCode[1] && buf[15] == randomCode[2]) {
                     if (mAvertiseConnectCallback != null){
                         mHandler.removeCallbacks(retryRunnable);
+                        setDeviceValue(device, buf);
                         device.setPairState(AdvertiserStates.StatusCode.PAIRED);
                         mAvertiseConnectCallback.onAvertiseConnected(device);
                         AdvertiserLog.e(TAG, "设备配对完成"+device.toString());
                     }
                 }
             }
-//            if (buf[1] == Constant.AVERTISE_PRODUCT[0] && buf[2] == Constant.AVERTISE_PRODUCT[1] && buf[3] == Constant.AVERTISE_PRODUCT[2] && buf[4] == 0x42) {//2.4G回复对码(对码模式)
-//                if (mAvertiseDiscoverCallback != null) {
-//                    byte[] rolling_code = new byte[3];
-//                    System.arraycopy(buf, 6, rolling_code, 0, rolling_code.length);
-//                    device.setRollingCode(rolling_code);
-//                    device.setRandomCode(randomCode);
-//                    device.setPairState(AdvertiserStates.StatusCode.UNPAIR);
-//                    String suffix = ByteUtils.BinaryToHexString(rolling_code).replaceAll(" ", "");
-//                    device.setBleName(AdvertiserConfig.config().getPrefixAvertiseName() + suffix);
-//                    mAvertiseDiscoverCallback.onAvertiseScan(device);
-//                    AdvertiserLog.e(TAG, "扫描到新设备"+device.toString());
-//                }
-//            } if (buf[1] == Constant.AVERTISE_PRODUCT[0] && buf[2] == Constant.AVERTISE_PRODUCT[1] && buf[3] == Constant.AVERTISE_PRODUCT[2] && buf[4] == 0x45
-//                    && buf[13] == randomCode[0] && buf[14] == randomCode[1] && buf[15] == randomCode[2]) {//2.4G回复对码（正常模式）  是否在线
-//                if (mAvertiseDiscoverCallback != null) {
-//                    byte[] rolling_code = new byte[3];
-//                    System.arraycopy(buf, 6, rolling_code, 0, rolling_code.length);
-//                    device.setRollingCode(rolling_code);
-//                    device.setRandomCode(randomCode);
-//                    String suffix = ByteUtils.BinaryToHexString(rolling_code).replaceAll(" ", "");
-//                    device.setBleName(AdvertiserConfig.config().getPrefixAvertiseName() + suffix);
-//                    device.setPairState(AdvertiserStates.StatusCode.PAIRED);
-//                    mAvertiseDiscoverCallback.onAvertiseScan(device);
-//                    AdvertiserLog.e(TAG, "设备已在线"+device.toString());
-//                }
-//            }  if (buf[1] == Constant.AVERTISE_PRODUCT[0] && buf[2] == Constant.AVERTISE_PRODUCT[1] && buf[3] == Constant.AVERTISE_PRODUCT[2] && buf[4] == 0x44
-//                    && buf[13] == randomCode[0] && buf[14] == randomCode[1] && buf[15] == randomCode[2]) {//2.4G回复对码完成
-//                if (mAvertiseConnectCallback != null) {
-//                    AdvertiserHandler.getHandler().removeCallbacks(retryRunnable);
-//                    byte[] rolling_code = new byte[3];
-//                    System.arraycopy(buf, 6, rolling_code, 0, rolling_code.length);
-//                    device.setRollingCode(rolling_code);
-//                    device.setRandomCode(randomCode);
-//                    device.setPairState(AdvertiserStates.StatusCode.PAIRED);
-//                    mAvertiseConnectCallback.onAvertiseConnected(device);
-//                    AdvertiserLog.e(TAG, "设备配对完成"+device.toString());
-//                }
-//            }
         }
+    }
+
+    //给扫描到的设备赋值
+    private void setDeviceValue(AdvertiserDevice device, byte[] buf){
+        byte[] randomCode = AdvertiserConfig.generateRandom();
+        byte[] rolling_code = new byte[3];
+        System.arraycopy(buf, 6, rolling_code, 0, rolling_code.length);
+        device.setRollingCode(rolling_code);
+        device.setRandomCode(randomCode);
+        device.setOn(buf[10] == 0x01);
+        String suffix = ByteUtils.BinaryToHexString(rolling_code).replaceAll(" ", "");
+        device.setBleName(AdvertiserConfig.config().getPrefixAvertiseName() + suffix);
     }
 
     //如果设备池中没有该对象地址，把设备对象先放入2.4G设备池中，如果有则返回设备池中的设备对象

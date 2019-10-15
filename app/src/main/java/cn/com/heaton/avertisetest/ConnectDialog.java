@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
 import cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback;
 import cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback;
-import cn.com.heaton.avertisetest.app.Protocol;
+import cn.com.heaton.avertisetest.adapter.DeviceAdapter;
 import cn.com.heaton.avertisetest.base.BaseDialog;
 
 /**

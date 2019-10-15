@@ -69,7 +69,7 @@ public class AdvertiserRequest<T extends AdvertiserDevice> {
                     byte[] tempPayload = new byte[16];
                     System.arraycopy(payload, 0, tempPayload, 0, tempPayload.length);
                     AdvertiserLog.e(TAG, "加密前的数据: "+ByteUtils.byteArrayToHexStr(tempPayload));
-                    WirelessEncoder.cipher(tempPayload, true);
+//                    WirelessEncoder.cipher(tempPayload, true);
                     WirelessEncoder.payload(bleChannel, tempPayload, calculatedPayload);
                     myAdvertiseData = new AdvertiseData.Builder()
                             .addManufacturerData(65520, calculatedPayload)

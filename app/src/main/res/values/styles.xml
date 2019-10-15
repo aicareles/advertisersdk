@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--app默认主题  白天模式-->
+    <style name="Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
     <!--/*选择音乐弹出框样式*/-->
     <style name="dialog" parent="@android:style/Animation.Dialog">
         <!-- 背景颜色及透明程度  -->

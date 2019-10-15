@@ -1,50 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.com.heaton.avertisetest.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cn.com.heaton.avertisetest.MainActivity">
 
-    <EditText
-        android:id="@+id/et_prefixname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="设备前缀,如：BXC-"/>
-
-    <EditText
-        android:id="@+id/et_productcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_prefixname"
-        android:hint="设备产品码,如：0x54, 0x00, 0x11"/>
-
-    <EditText
-        android:id="@+id/et_blechannel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_below="@+id/et_productcode"
-        android:hint="发码通道,如：37/38/39"/>
-
-    <EditText
-        android:id="@+id/et_blepayload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_blechannel"
-        android:hint="广播负载数据"/>
-
-    <Button
-        android:id="@+id/btn_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_blepayload"
-        android:text="发送"/>
-
-    <Button
-        android:id="@+id/scan"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="扫描"/>
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_scan"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:src="@android:drawable/ic_menu_search"/>
+
+        <LinearLayout
+            android:id="@+id/ll_delay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送间隔:"/>
+
+            <EditText
+                android:id="@+id/et_delay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ms"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="发送时长:"/>
+
+            <EditText
+                android:id="@+id/et_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ms"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址码:"/>
+
+            <EditText
+                android:id="@+id/et_address_code"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint=""/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3个byte"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_payload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="指令:"/>
+
+            <EditText
+                android:id="@+id/et_payload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tv_payload"
+                android:hint=""/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_payload"
+                android:layout_marginTop="20dp"
+                android:text="每个byte之间用空格分隔"/>
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_payload"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="发送"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="广播记录"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="广播记录"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_send"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="广播扫描"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/et_filter"
+                android:text="过滤:"/>
+
+            <EditText
+                android:id="@+id/et_filter"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:hint=""/>
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_receive"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </LinearLayout>
+
+</cn.com.heaton.avertisetest.MyScrollView>
