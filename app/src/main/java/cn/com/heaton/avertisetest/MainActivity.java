@@ -31,6 +31,7 @@ import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.avertisetest.adapter.SendAdvertiserAdapter;
+import cn.com.heaton.avertisetest.app.LogIntercept;
 import cn.com.heaton.avertisetest.base.BaseActivity;
 import cn.com.heaton.avertisetest.model.SendRecord;
 
@@ -216,6 +217,7 @@ public class MainActivity extends BaseActivity {
                 .setConnectTimeout(8 * 1000)
                 .setScanPeriod(30 * 1000)
                 .setRetryConnect(3)
+                .setInterceptor(new LogIntercept())
                 .create(getApplication());
     }
 

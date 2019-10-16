@@ -13,6 +13,8 @@ import cn.com.heaton.advertisersdk.AdvertiserDevice;
 import cn.com.heaton.advertisersdk.AdvertiserHandler;
 import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.config.AdvertiserConfig;
+import cn.com.heaton.advertisersdk.interceptor.RealInterceptorHandler;
+import cn.com.heaton.advertisersdk.interceptor.Request;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.advertisersdk.utils.TaskExecutor;
 import cn.com.heaton.advertisersdk.annotation.Implement;
@@ -69,6 +71,7 @@ public class AdvertiserRequest<T extends AdvertiserDevice> {
                     byte[] tempPayload = new byte[16];
                     System.arraycopy(payload, 0, tempPayload, 0, tempPayload.length);
                     AdvertiserLog.e(TAG, "加密前的数据: "+ByteUtils.byteArrayToHexStr(tempPayload));
+                    RealInterceptorHandler.getInstance().request(tempPayload);
 //                    WirelessEncoder.cipher(tempPayload, true);
                     WirelessEncoder.payload(bleChannel, tempPayload, calculatedPayload);
                     myAdvertiseData = new AdvertiseData.Builder()

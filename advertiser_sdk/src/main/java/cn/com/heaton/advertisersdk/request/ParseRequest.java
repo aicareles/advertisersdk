@@ -13,6 +13,7 @@ import cn.com.heaton.advertisersdk.AdvertiserHandler;
 import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.AdvertiserStates;
 import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
+import cn.com.heaton.advertisersdk.interceptor.RealInterceptorHandler;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.advertisersdk.annotation.Implement;
 import cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback;
@@ -115,6 +116,7 @@ public class ParseRequest<T extends AdvertiserDevice> {
                 scanCallback.onParsedData(newDevice, buf);
             }
             AdvertiserLog.e(TAG, "parseScanRecord>>>>>: "+ByteUtils.byteArrayToHexStr(buf));
+            RealInterceptorHandler.getInstance().response(buf);
             byte[] avertiseProductCode = AdvertiserConfig.config().getAvertiseProductCode();
             if (buf[1] == avertiseProductCode[0] && buf[2] == avertiseProductCode[1] && buf[3] == avertiseProductCode[2]) {
                 byte[] randomCode = AdvertiserConfig.generateRandom();
