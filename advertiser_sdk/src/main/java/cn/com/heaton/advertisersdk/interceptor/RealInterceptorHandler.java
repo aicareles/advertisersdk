@@ -5,37 +5,40 @@ import cn.com.heaton.advertisersdk.config.AdvertiserConfig;
 public class RealInterceptorHandler implements Interceptor.InterceptorHandler {
 
     private Interceptor interceptor;
-    private Request request = new Request();
-    private Response response = new Response();
-    private static RealInterceptorHandler interceptorHandler;
+    private ParseStrategy strategy;
+    private Payload payload = new Payload();
 
     private RealInterceptorHandler(){
-        interceptor = AdvertiserConfig.config().getInterceptor();
+        AdvertiserConfig config = AdvertiserConfig.config();
+        interceptor = config.getInterceptor();
+        strategy = config.getParseStrategy();
     }
 
-    public static RealInterceptorHandler getInstance(){
-        if (interceptorHandler == null){
-            interceptorHandler = new RealInterceptorHandler();
-        }
-        return interceptorHandler;
-    }
+    public final static ThreadLocal<RealInterceptorHandler> sInterceptorHandler = new ThreadLocal<>();
 
-    @Override
-    public Request request(byte[] payload) {
-        if (interceptor != null){
-            request.parse(payload);
-            interceptor.request(request);
+    public static RealInterceptorHandler getInstance() {
+        if (sInterceptorHandler.get() == null) {
+            sInterceptorHandler.set(new RealInterceptorHandler());
         }
-        return request;
+        return sInterceptorHandler.get();
     }
 
     @Override
-    public Response response(byte[] payload) {
+    public Payload request(byte[] payload) {
         if (interceptor != null){
-            response.parse(payload);
-            interceptor.response(response);
+            this.payload.parse(payload, strategy==null ? null : strategy.reqStrategy());
+            interceptor.request(this.payload);
         }
-        return response;
+        return this.payload;
+    }
+
+    @Override
+    public Payload response(byte[] payload) {
+        if (interceptor != null){
+            this.payload.parse(payload, strategy==null ? null : strategy.resStrategy());
+            interceptor.response(this.payload);
+        }
+        return this.payload;
     }
 
 }

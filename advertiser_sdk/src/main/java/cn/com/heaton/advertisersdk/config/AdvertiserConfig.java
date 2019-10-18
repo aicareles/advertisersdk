@@ -10,6 +10,7 @@ import java.util.Random;
 import cn.com.heaton.advertisersdk.AdvertiserClient;
 import cn.com.heaton.advertisersdk.AdvertiserDevice;
 import cn.com.heaton.advertisersdk.interceptor.Interceptor;
+import cn.com.heaton.advertisersdk.interceptor.ParseStrategy;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.advertisersdk.utils.SPUtils;
 
@@ -29,6 +30,8 @@ public class AdvertiserConfig {
     private final static byte[] DEFALUT_AVERTISE_PRODUCT = {0x54, 0x00, 0x01};
 
     private Interceptor interceptor;
+
+    private ParseStrategy parseStrategy;
 
     private static AdvertiserConfig sConfig;
 
@@ -168,6 +171,15 @@ public class AdvertiserConfig {
 
     public AdvertiserConfig setInterceptor(Interceptor interceptor) {
         this.interceptor = interceptor;
+        return this;
+    }
+
+    public ParseStrategy getParseStrategy() {
+        return parseStrategy;
+    }
+
+    public AdvertiserConfig setParseStrategy(ParseStrategy parseStrategy) {
+        this.parseStrategy = parseStrategy;
         return this;
     }
 

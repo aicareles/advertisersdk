@@ -14,7 +14,6 @@ import cn.com.heaton.advertisersdk.AdvertiserHandler;
 import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.config.AdvertiserConfig;
 import cn.com.heaton.advertisersdk.interceptor.RealInterceptorHandler;
-import cn.com.heaton.advertisersdk.interceptor.Request;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.advertisersdk.utils.TaskExecutor;
 import cn.com.heaton.advertisersdk.annotation.Implement;
@@ -30,22 +29,21 @@ import wireless.algorithm.io.cshsoft.a2_4gcrytonlib.WirelessEncoder;
 
 @Implement(AdvertiserRequest.class)
 public class AdvertiserRequest<T extends AdvertiserDevice> {
-
     private static final String TAG = "AdvertiserRequest";
 
-    private Handler mHandler;
+    private Handler handler;
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothLeAdvertiser mAdvertiser;
-    private AdvertiseSettings myAdvertiseSettings;
-    private AdvertiseData myAdvertiseData;
+    private BluetoothLeAdvertiser advertiser;
+    private AdvertiseSettings advertiseSettings;
+    private AdvertiseData advertiseData;
     private byte[] calculatedPayload = new byte[24];//最大24个byte
     private byte[] pairload = new byte[16];//对码装载数据  16byte
 
     protected AdvertiserRequest() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mAdvertiser = bluetoothAdapter.getBluetoothLeAdvertiser();
-        mHandler = AdvertiserHandler.getHandler();
-        if (mAdvertiser == null) {
+        advertiser = bluetoothAdapter.getBluetoothLeAdvertiser();
+        handler = AdvertiserHandler.getHandler();
+        if (advertiser == null) {
             try {
                 throw new AdvertiserUnsupportException("Device does not support Avertise!");
             } catch (AdvertiserUnsupportException e) {
@@ -53,7 +51,7 @@ public class AdvertiserRequest<T extends AdvertiserDevice> {
             }
         }
         //设置频率:  ADVERTISE_MODE_LOW_LATENCY 100ms     ADVERTISE_MODE_LOW_POWER 1s     ADVERTISE_MODE_BALANCED  250ms
-        myAdvertiseSettings = new AdvertiseSettings.Builder()
+        advertiseSettings = new AdvertiseSettings.Builder()
                 .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)//设置广播间隔100ms
                 .setConnectable(true)
                 .setTimeout(0)
@@ -62,22 +60,22 @@ public class AdvertiserRequest<T extends AdvertiserDevice> {
     }
 
     public void startAdvertising(final byte[] payload, final int bleChannel){
-        mHandler.removeCallbacks(stopAvertiseRunnable);
-        if(mAdvertiser != null && bluetoothAdapter.isEnabled()){
+        handler.removeCallbacks(stopAvertiseRunnable);
+        if(advertiser != null && bluetoothAdapter.isEnabled()){
             TaskExecutor.executeTask(new Runnable() {
                 @Override
                 public void run() {
-                    mAdvertiser.stopAdvertising(mAdvertiseCallback);
+                    advertiser.stopAdvertising(mAdvertiseCallback);
                     byte[] tempPayload = new byte[16];
                     System.arraycopy(payload, 0, tempPayload, 0, tempPayload.length);
                     AdvertiserLog.e(TAG, "加密前的数据: "+ByteUtils.byteArrayToHexStr(tempPayload));
                     RealInterceptorHandler.getInstance().request(tempPayload);
 //                    WirelessEncoder.cipher(tempPayload, true);
                     WirelessEncoder.payload(bleChannel, tempPayload, calculatedPayload);
-                    myAdvertiseData = new AdvertiseData.Builder()
+                    advertiseData = new AdvertiseData.Builder()
                             .addManufacturerData(65520, calculatedPayload)
                             .build();
-                    mAdvertiser.startAdvertising(myAdvertiseSettings, myAdvertiseData, mAdvertiseCallback);
+                    advertiser.startAdvertising(advertiseSettings, advertiseData, mAdvertiseCallback);
                 }
             });
         }
@@ -88,11 +86,11 @@ public class AdvertiserRequest<T extends AdvertiserDevice> {
     }
 
     public void stopAdvertising() {
-        if(mAdvertiser != null){
+        if(advertiser != null){
             TaskExecutor.executeTask(new Runnable() {
                 @Override
                 public void run() {
-                    mAdvertiser.stopAdvertising(mAdvertiseCallback);
+                    advertiser.stopAdvertising(mAdvertiseCallback);
                     AdvertiserLog.e(TAG, "广播已关闭");
                 }
             });
@@ -100,7 +98,7 @@ public class AdvertiserRequest<T extends AdvertiserDevice> {
     }
 
     public void stopAdvertising(Long delay){
-        mHandler.postDelayed(stopAvertiseRunnable, delay);
+        handler.postDelayed(stopAvertiseRunnable, delay);
     }
 
     private Runnable stopAvertiseRunnable = new Runnable() {

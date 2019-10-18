@@ -19,7 +19,6 @@ import cn.com.heaton.advertisersdk.annotation.Implement;
 import cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback;
 import cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback;
 import cn.com.heaton.advertisersdk.config.AdvertiserConfig;
-import wireless.algorithm.io.cshsoft.a2_4gcrytonlib.WirelessEncoder;
 
 /**
  * description $desc$
@@ -33,24 +32,28 @@ public class ParseRequest<T extends AdvertiserDevice> {
     private static final int BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA = 0xFF;//< Manufacturer Specific Data.
     private final static long SINGLE_CONNECT_TIME = 2000L;
 
-    private AdvertiserDiscoverCallback mAvertiseDiscoverCallback;
-    private AdvertiserConnectCallback mAvertiseConnectCallback;
+    private AdvertiserDiscoverCallback advertiserDiscoverCallback;
+    private AdvertiserConnectCallback advertiserConnectCallback;
     private final SparseArray<byte[]> records = new SparseArray<>();
-    private List<AdvertiserDevice> mDevicePool = new ArrayList<>();//2.4G设备池
+    private List<AdvertiserDevice> devicePool = new ArrayList<>();//2.4G设备池
+    private byte[] avertiseProductCode;
+    private byte[] randomCode;
     private int retryCount = 0;//重试次数
-    private Handler mHandler;
+    private Handler handler;
 
     protected ParseRequest() {
-        mHandler = AdvertiserHandler.getHandler();
+        handler = AdvertiserHandler.getHandler();
+        avertiseProductCode = AdvertiserConfig.config().getAvertiseProductCode();
+        randomCode = AdvertiserConfig.generateRandom();
     }
 
     void setAvertiseDiscoverCallback(AdvertiserDiscoverCallback callback) {
-        this.mAvertiseDiscoverCallback = callback;
-        if (mAvertiseDiscoverCallback != null) {
-            mAvertiseDiscoverCallback.onDiscoverStart();
+        this.advertiserDiscoverCallback = callback;
+        if (advertiserDiscoverCallback != null) {
+            advertiserDiscoverCallback.onDiscoverStart();
         }
-        mHandler.removeCallbacks(discoverStopRunnable);
-        mHandler.postDelayed(discoverStopRunnable, AdvertiserConfig.config().getScanPeriod());
+        handler.removeCallbacks(discoverStopRunnable);
+        handler.postDelayed(discoverStopRunnable, AdvertiserConfig.config().getScanPeriod());
     }
 
     private Runnable discoverStopRunnable = new Runnable() {
@@ -58,8 +61,8 @@ public class ParseRequest<T extends AdvertiserDevice> {
         public void run() {
             //Stop scanning device (stop broadcasting)
             AdvertiserClient.getDefault().stopAdvertising();
-            if (mAvertiseDiscoverCallback != null) {
-                mAvertiseDiscoverCallback.onDiscoverStop();
+            if (advertiserDiscoverCallback != null) {
+                advertiserDiscoverCallback.onDiscoverStop();
             }
         }
     };
@@ -68,9 +71,9 @@ public class ParseRequest<T extends AdvertiserDevice> {
         if (null != callback) {
             retryCount = 0;
             AdvertiserHandler.getHandler().removeCallbacks(retryRunnable);
-            this.mAvertiseConnectCallback = callback;
+            this.advertiserConnectCallback = callback;
             //分次进行连接（根据重连次数）
-            mHandler.postDelayed(retryRunnable, SINGLE_CONNECT_TIME);
+            handler.postDelayed(retryRunnable, SINGLE_CONNECT_TIME);
         }
     }
 
@@ -82,10 +85,10 @@ public class ParseRequest<T extends AdvertiserDevice> {
                 AdvertiserLog.e(TAG, "正在第" + retryCount + "次重连");
                 AdvertiserRequest request = Rproxy.getProxy().getRequest(AdvertiserRequest.class);
                 request.retryConnect();
-                mHandler.postDelayed(this, SINGLE_CONNECT_TIME);
+                handler.postDelayed(this, SINGLE_CONNECT_TIME);
             } else {
-                mHandler.removeCallbacks(retryRunnable);
-                mAvertiseConnectCallback.onAvertiseConnectTimeOut();
+                handler.removeCallbacks(retryRunnable);
+                advertiserConnectCallback.onAvertiseConnectTimeOut();
             }
         }
     };
@@ -117,35 +120,42 @@ public class ParseRequest<T extends AdvertiserDevice> {
             }
             AdvertiserLog.e(TAG, "parseScanRecord>>>>>: "+ByteUtils.byteArrayToHexStr(buf));
             RealInterceptorHandler.getInstance().response(buf);
-            byte[] avertiseProductCode = AdvertiserConfig.config().getAvertiseProductCode();
-            if (buf[1] == avertiseProductCode[0] && buf[2] == avertiseProductCode[1] && buf[3] == avertiseProductCode[2]) {
-                byte[] randomCode = AdvertiserConfig.generateRandom();
+            if (isOwnProduct(buf)) {
                 AdvertiserDevice device = takeDevicePool(newDevice);
                 if (buf[4] == 0x42) {//2.4G回复对码(对码模式)
-                    if (mAvertiseDiscoverCallback != null) {
+                    if (advertiserDiscoverCallback != null) {
                         setDeviceValue(device, buf);
                         device.setPairState(AdvertiserStates.StatusCode.UNPAIR);
-                        mAvertiseDiscoverCallback.onAvertiseScan(device);
+                        advertiserDiscoverCallback.onAvertiseScan(device);
                         AdvertiserLog.e(TAG, "扫描到新设备" + device.toString());
                     }
-                } else if (buf[4] == 0x45 && buf[13] == randomCode[0] && buf[14] == randomCode[1] && buf[15] == randomCode[2]) {
-                    if (mAvertiseDiscoverCallback != null) {
+                } else if (buf[4] == 0x45) {
+                    if (advertiserDiscoverCallback != null) {
                         setDeviceValue(device, buf);
                         device.setPairState(AdvertiserStates.StatusCode.PAIRED);
-                        mAvertiseDiscoverCallback.onAvertiseScan(device);
+                        advertiserDiscoverCallback.onAvertiseScan(device);
                         AdvertiserLog.e(TAG, "设备已在线>>>>>" + device.toString());
                     }
-                } else if (buf[4] == 0x44 && buf[13] == randomCode[0] && buf[14] == randomCode[1] && buf[15] == randomCode[2]) {
-                    if (mAvertiseConnectCallback != null){
-                        mHandler.removeCallbacks(retryRunnable);
+                } else if (buf[4] == 0x44) {
+                    if (advertiserConnectCallback != null){
+                        handler.removeCallbacks(retryRunnable);
                         setDeviceValue(device, buf);
                         device.setPairState(AdvertiserStates.StatusCode.PAIRED);
-                        mAvertiseConnectCallback.onAvertiseConnected(device);
+                        advertiserConnectCallback.onAvertiseConnected(device);
                         AdvertiserLog.e(TAG, "设备配对完成"+device.toString());
                     }
                 }
             }
         }
+    }
+
+    private boolean isOwnProduct(byte[] buf){
+        return buf[1] == avertiseProductCode[0]
+                && buf[2] == avertiseProductCode[1]
+                && buf[3] == avertiseProductCode[2]
+                && buf[13] == randomCode[0]
+                && buf[14] == randomCode[1]
+                && buf[15] == randomCode[2];
     }
 
     //给扫描到的设备赋值
@@ -162,12 +172,12 @@ public class ParseRequest<T extends AdvertiserDevice> {
 
     //如果设备池中没有该对象地址，把设备对象先放入2.4G设备池中，如果有则返回设备池中的设备对象
     private AdvertiserDevice takeDevicePool(AdvertiserDevice device) {
-        for (AdvertiserDevice d : mDevicePool) {
+        for (AdvertiserDevice d : devicePool) {
             if (device.getBleAddress().equals(d.getBleAddress())) {
                 return d;
             }
         }
-        mDevicePool.add(device);
+        devicePool.add(device);
         return device;
     }
 

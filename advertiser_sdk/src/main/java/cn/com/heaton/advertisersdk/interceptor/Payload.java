@@ -3,7 +3,7 @@ package cn.com.heaton.advertisersdk.interceptor;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 
 //响应结果
-public class Response {
+public class Payload {
     private byte[] scanResult;
     private byte[] productCode = new byte[3];
     private byte[] rollingCode = new byte[3];
@@ -50,17 +50,20 @@ public class Response {
         this.commandCode = commandCode;
     }
 
-    public void parse(byte[] payload){
+    public void parse(byte[] payload, Strategy strategy){
+        if (strategy == null){
+            strategy = new Strategy.Builder().build();
+        }
         setScanResult(payload);
-        setCommandCode(payload[4]);
-        System.arraycopy(payload, 1, productCode, 0, productCode.length);
-        System.arraycopy(payload, 6, rollingCode, 0, rollingCode.length);
-        System.arraycopy(payload, 13, randomCode, 0, randomCode.length);
+        setCommandCode(payload[strategy.getCommandIndex()]);
+        System.arraycopy(payload, strategy.getProductIndex(), productCode, 0, productCode.length);
+        System.arraycopy(payload, strategy.getRollingIndex(), rollingCode, 0, rollingCode.length);
+        System.arraycopy(payload, strategy.getRandomIndex(), randomCode, 0, randomCode.length);
     }
 
     @Override
     public String toString() {
-        return "Response{" +
+        return "Payload{" +
                 "scanResult=" + byte2Str(scanResult) +
                 ", productCode=" + byte2Str(productCode) +
                 ", rollingCode=" + byte2Str(rollingCode) +

@@ -33,45 +33,45 @@ public class ScanRequest<T extends AdvertiserDevice> {
 
     private static final String TAG = "ScanRequest";
 
-    private boolean mScanning;
-    private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothLeScanner mScanner;
-    private ScanSettings mScannerSetting;
-    private List<ScanFilter> mFilters;
-    private AdvertiserScanCallback<T> mScanCallback;
-    private ArrayList<T> mScanDevices = new ArrayList<>();
-    private ParseRequest<T> mParseRequest;
-    private Handler mHandler;
+    private boolean scanning;
+    private BluetoothAdapter bluetoothAdapter;
+    private BluetoothLeScanner scanner;
+    private ScanSettings scanSettings;
+    private List<ScanFilter> filters;
+    private AdvertiserScanCallback<T> scanCallback;
+    private ArrayList<T> scanDevices = new ArrayList<>();
+    private ParseRequest<T> parseRequest;
+    private Handler handler;
 
     protected ScanRequest() {
-        mHandler = AdvertiserHandler.getHandler();
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        handler = AdvertiserHandler.getHandler();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //mScanner will be null if Bluetooth has been closed
-            mScanner = mBluetoothAdapter.getBluetoothLeScanner();
-            mScannerSetting = new ScanSettings.Builder()
+            //scanner will be null if Bluetooth has been closed
+            scanner = bluetoothAdapter.getBluetoothLeScanner();
+            scanSettings = new ScanSettings.Builder()
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                     .build();
-            mFilters = new ArrayList<>();
+            filters = new ArrayList<>();
         }
-        mParseRequest = Rproxy.getProxy().getRequest(ParseRequest.class);
+        parseRequest = Rproxy.getProxy().getRequest(ParseRequest.class);
     }
 
     //扫描广播包
     public void startScan(AdvertiserScanCallback<T> callback) {
-        if(mScanning)return;
+        if(scanning)return;
         if(callback != null){
-            mScanCallback = callback;
+            scanCallback = callback;
         }
         //必须再次清空arraylist   停止时清空一直没有清除干净  始终剩一个size（严重BUG）
-        mScanDevices.clear();
-        mScanning = true;
+        scanDevices.clear();
+        scanning = true;
         // Stops scanning after a pre-defined scan period.
-        mHandler.postDelayed(stopRunnble, AdvertiserConfig.config().getScanPeriod());
-//        mBluetoothAdapter.startLeScan(mLeScanCallback);
-        mScanner.startScan(mFilters, mScannerSetting, mScannerCallback);
+        handler.postDelayed(stopRunnble, AdvertiserConfig.config().getScanPeriod());
+//        bluetoothAdapter.startLeScan(mLeScanCallback);
+        scanner.startScan(filters, scanSettings, mScannerCallback);
         if(callback != null){
-            mScanCallback.onStart();
+            scanCallback.onStart();
         }
     }
 
@@ -80,13 +80,13 @@ public class ScanRequest<T extends AdvertiserDevice> {
     }
 
     public void stopScan() {
-        if (!mScanning) return;
-        mHandler.removeCallbacks(stopRunnble);
-        mScanDevices.clear();
-        mScanning = false;
-        mScanner.stopScan(mScannerCallback);
-        if(mScanCallback != null){
-            mScanCallback.onStop();
+        if (!scanning) return;
+        handler.removeCallbacks(stopRunnble);
+        scanDevices.clear();
+        scanning = false;
+        scanner.stopScan(mScannerCallback);
+        if(scanCallback != null){
+            scanCallback.onStop();
         }
     }
 
@@ -98,7 +98,7 @@ public class ScanRequest<T extends AdvertiserDevice> {
     };
 
     public boolean isScanning() {
-        return mScanning;
+        return scanning;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -119,11 +119,11 @@ public class ScanRequest<T extends AdvertiserDevice> {
             if (avertiseDevice == null) {
 //                avertiseDevice = (T) AdvertiserFactory.create(AdvertiserDevice.class, device);
                 avertiseDevice = AdvertiserFactory.newDevice(device);
-                mScanDevices.add(avertiseDevice);
+                scanDevices.add(avertiseDevice);
             }
-            mParseRequest.parseScanRecord(avertiseDevice, scanRecord, mScanCallback);
-            if (mScanCallback != null) {
-                mScanCallback.onLeScan(avertiseDevice, result.getRssi(), scanRecord);
+            parseRequest.parseScanRecord(avertiseDevice, scanRecord, scanCallback);
+            if (scanCallback != null) {
+                scanCallback.onLeScan(avertiseDevice, result.getRssi(), scanRecord);
             }
         }
 
@@ -137,14 +137,14 @@ public class ScanRequest<T extends AdvertiserDevice> {
         @Override
         public void onScanFailed(int errorCode) {
             AdvertiserLog.e("Scan Failed", "Error Code: " + errorCode);
-            if (mScanCallback != null) {
-                mScanCallback.onScanFailed(errorCode);
+            if (scanCallback != null) {
+                scanCallback.onScanFailed(errorCode);
             }
         }
     };
 
     private T getDevice(String address) {
-        for (T device : mScanDevices) {
+        for (T device : scanDevices) {
             if (device.getBleAddress().equals(address)) {
                 return device;
             }

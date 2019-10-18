@@ -2,14 +2,14 @@ package cn.com.heaton.advertisersdk.interceptor;
 
 public interface Interceptor {
 
-    void request(Request request);
+    void request(Payload request);
 
-    void response(Response response);
+    void response(Payload response);
 
 
     interface InterceptorHandler {
-        Request request(byte[] payload);
+        Payload request(byte[] payload);
 
-        Response response(byte[] payload);
+        Payload response(byte[] payload);
     }
 }
