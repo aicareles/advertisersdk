@@ -19,6 +19,7 @@ import cn.com.heaton.advertisersdk.annotation.Implement;
 import cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback;
 import cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback;
 import cn.com.heaton.advertisersdk.config.AdvertiserConfig;
+import wireless.algorithm.io.cshsoft.a2_4gcrytonlib.WirelessEncoder;
 
 /**
  * description $desc$
@@ -114,7 +115,7 @@ public class ParseRequest<T extends AdvertiserDevice> {
             byte[] buf = Arrays.copyOfRange(data, 2, data.length);
             if (buf.length != 16) return;
             //解密
-//            WirelessEncoder.cipher(buf, false);
+            WirelessEncoder.cipher(buf, false);
             if (scanCallback != null){
                 scanCallback.onParsedData(newDevice, buf);
             }
