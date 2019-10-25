@@ -53,6 +53,9 @@ public class ScanRequest<T extends AdvertiserDevice> {
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                     .build();
             filters = new ArrayList<>();
+            filters.add(new ScanFilter.Builder()
+                    .setServiceUuid(null)//8.0以上手机后台扫描，必须开启
+                    .build());
         }
         parseRequest = Rproxy.getProxy().getRequest(ParseRequest.class);
     }
