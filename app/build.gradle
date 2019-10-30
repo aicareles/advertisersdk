@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 
 
@@ -30,6 +32,12 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "ADV BT APP-v${defaultConfig.versionName}-${releaseTime()}.apk"
+        }
+    }
 }
 
 dependencies {
@@ -40,4 +48,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':advertiser_sdk')
 //    implementation 'com.github.aicareles:advertisersdk:v1.0.4'
+}
+
+static def releaseTime() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm")
+    return sdf.format(new Date())
 }

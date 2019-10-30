@@ -3,7 +3,6 @@ package cn.com.heaton.avertisetest;
 import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,11 +11,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -27,14 +29,15 @@ import java.util.List;
 
 import cn.com.heaton.advertisersdk.AdvertiserClient;
 import cn.com.heaton.advertisersdk.AdvertiserDevice;
-import cn.com.heaton.advertisersdk.AdvertiserLog;
 import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
 import cn.com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.avertisetest.adapter.SendAdvertiserAdapter;
 import cn.com.heaton.avertisetest.app.LogIntercept;
 import cn.com.heaton.avertisetest.app.LogParseStrategy;
 import cn.com.heaton.avertisetest.base.BaseActivity;
+import cn.com.heaton.avertisetest.model.SPData;
 import cn.com.heaton.avertisetest.model.SendRecord;
+import cn.com.heaton.avertisetest.utils.ACache;
 
 /**
  * description $desc$
@@ -44,10 +47,11 @@ import cn.com.heaton.avertisetest.model.SendRecord;
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
+    public static final String SP_KEY = "sp_data";
     public static final int REQUEST_ENABLE_BT = 1;
-    private Handler mHandler = new Handler();
+    private Handler handler = new Handler();
     private EditText et_delay, et_duration, et_address_code, et_payload, et_filter;
-    private Button btn_send;
+    private Button btn_send, btn_clear_receive, btn_clear_send;
     private ImageView iv_scan;
     private ListView lv_send, lv_receive;
     private SendAdvertiserAdapter sendAdvertiserAdapter;
@@ -57,7 +61,7 @@ public class MainActivity extends BaseActivity {
     private List<SendRecord> receiveAllRecords;
     private List<SendRecord> receiveFilterRecords;
 
-    private AdvertiserClient<AdvertiserDevice> mClient;
+    private AdvertiserClient<AdvertiserDevice> client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,14 +72,25 @@ public class MainActivity extends BaseActivity {
 
         initData();
 
+        initSPData();
+
         initLinsenter();
 
         checkBLEStatus();
 
     }
 
+    private void initSPData() {
+        SPData spData = (SPData) ACache.get(getApplicationContext()).getAsObject(SP_KEY);
+        if (spData != null){
+            et_duration.setText(String.valueOf(spData.getSend_duration()));
+            et_address_code.setText(spData.getAddress_code());
+            et_payload.setText(spData.getPayload());
+        }
+    }
+
     private void initData() {
-        mClient = AdvertiserClient.getDefault();
+        client = AdvertiserClient.getDefault();
         sendRecords = new ArrayList<>();
         sendAdvertiserAdapter = new SendAdvertiserAdapter(this, sendRecords);
         lv_send.setAdapter(sendAdvertiserAdapter);
@@ -90,28 +105,67 @@ public class MainActivity extends BaseActivity {
         iv_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mClient.startScan(scanCallback);
+                client.startScan(scanCallback);
             }
         });
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String payload = et_payload.getText().toString();
+                long duration = 1000L;
+                try {
+                    duration = Long.parseLong(et_duration.getText().toString());
+                    if (duration<100){
+                        Toast.makeText(MainActivity.this, "Must be greater than 100", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Must be a number", Toast.LENGTH_SHORT).show();
+                }
                 if (!TextUtils.isEmpty(payload)){
                     String hexPayload = payload.replaceAll(" ","");
                     if (hexPayload.length() != 32){
-                        Toast.makeText(MainActivity.this, "长度必须是16个byte", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "The length must be 16 bytes!", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     byte[] bytes = ByteUtils.hexStrToByteArray(hexPayload);
-                    mClient.startAdvertising(bytes);
-                    mClient.stopAdvertising(Long.parseLong(et_duration.getText().toString()));
+                    client.startAdvertising(bytes);
+                    client.stopAdvertising(duration);
                     addSendRecordToList(payload);
                 }
             }
         });
 
-        et_filter.addTextChangedListener(new TextWatcher() {
+        btn_clear_receive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                receiveAllRecords.clear();
+                receiveFilterRecords.clear();
+                receiveAdvertiserAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btn_clear_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendRecords.clear();
+                sendAdvertiserAdapter.notifyDataSetChanged();
+            }
+        });
+
+        et_filter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    String filter = et_filter.getText().toString().replaceAll(" ", "");
+                    filterReceive(filter);
+                }
+                return false;
+            }
+        });
+
+        et_address_code.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -122,10 +176,51 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String filter = editable.toString().replaceAll(" ", "");
-                filterReceive(filter);
+                saveSPData();
             }
         });
+
+        et_duration.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                saveSPData();
+            }
+        });
+
+        et_payload.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                saveSPData();
+            }
+        });
+    }
+
+    private void saveSPData(){
+        int send_duration = Integer.parseInt(et_duration.getText().toString());
+        String address_code = et_address_code.getText().toString();
+        String payload = et_payload.getText().toString();
+        SPData spData = new SPData(send_duration, address_code, payload);
+        ACache.get(getApplicationContext()).put(SP_KEY, spData);
     }
 
     //添加一条广播记录到list列表
@@ -134,7 +229,7 @@ public class MainActivity extends BaseActivity {
         sendRecord.setHexPayload(payload);
         DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
         sendRecord.setTime(df.format(new Date()));
-        sendRecords.add(sendRecord);
+        sendRecords.add(0, sendRecord);
         sendAdvertiserAdapter.notifyDataSetChanged();
     }
 
@@ -145,9 +240,9 @@ public class MainActivity extends BaseActivity {
         DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
         sendRecord.setTime(df.format(new Date()));
         //添加到所有列表
-        receiveAllRecords.add(sendRecord);
+        receiveAllRecords.add(0, sendRecord);
         //添加到adapter
-        receiveFilterRecords.add(sendRecord);
+        receiveFilterRecords.add(0, sendRecord);
         receiveAdvertiserAdapter.notifyDataSetChanged();
     }
 
@@ -171,6 +266,8 @@ public class MainActivity extends BaseActivity {
         et_filter = findViewById(R.id.et_filter);
         iv_scan = findViewById(R.id.iv_scan);
         btn_send = findViewById(R.id.btn_send);
+        btn_clear_receive = findViewById(R.id.btn_clear_receive);
+        btn_clear_send = findViewById(R.id.btn_clear_send);
         lv_send = findViewById(R.id.lv_send);
         lv_receive = findViewById(R.id.lv_receive);
     }
@@ -191,7 +288,7 @@ public class MainActivity extends BaseActivity {
 
     private void requestBLE(){
         requestPermission(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                "请求蓝牙相关权限", new GrantedResult(){
+                "Request Bluetooth related permissions", new GrantedResult(){
                     @Override
                     public void onResult(boolean granted) {
                         if (granted){
@@ -221,6 +318,8 @@ public class MainActivity extends BaseActivity {
                 .setInterceptor(new LogIntercept())
                 .setParseStrategy(new LogParseStrategy())
                 .create(getApplication());
+
+        client.startScan(scanCallback);
     }
 
     @Override
@@ -239,14 +338,18 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onParsedData(AdvertiserDevice device, byte[] parsedData) {
             super.onParsedData(device, parsedData);
-            Log.e(TAG, "onParsedData: >>>>");
             String hexString = ByteUtils.BinaryToHexString(parsedData);
+            String filter = et_filter.getText().toString();
+            if (!TextUtils.isEmpty(filter) && !hexString.contains(filter)){
+                return;
+            }
             addReceiveRecordToList(hexString);
         }
 
         @Override
         public void onStop() {
             super.onStop();
+            client.startScan(scanCallback);
         }
     };
 }

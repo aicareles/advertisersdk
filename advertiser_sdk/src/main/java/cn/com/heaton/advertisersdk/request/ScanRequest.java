@@ -72,10 +72,18 @@ public class ScanRequest<T extends AdvertiserDevice> {
         // Stops scanning after a pre-defined scan period.
         handler.postDelayed(stopRunnble, AdvertiserConfig.config().getScanPeriod());
 //        bluetoothAdapter.startLeScan(mLeScanCallback);
-        scanner.startScan(filters, scanSettings, mScannerCallback);
-        if(callback != null){
-            scanCallback.onStart();
+        if (bluetoothAdapter.isEnabled()){
+            scanner.startScan(filters, scanSettings, mScannerCallback);
+            if(callback != null){
+                scanCallback.onStart();
+            }
+        }else {
+            if(callback != null){
+                //未开启蓝牙
+                scanCallback.onScanFailed(-1);
+            }
         }
+
     }
 
     public void startScan(){
@@ -87,9 +95,11 @@ public class ScanRequest<T extends AdvertiserDevice> {
         handler.removeCallbacks(stopRunnble);
         scanDevices.clear();
         scanning = false;
-        scanner.stopScan(mScannerCallback);
-        if(scanCallback != null){
-            scanCallback.onStop();
+        if (bluetoothAdapter.isEnabled()){
+            scanner.stopScan(mScannerCallback);
+            if(scanCallback != null){
+                scanCallback.onStop();
+            }
         }
     }
 
