@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.com.heaton.advertisersdk.AdvertiserClient;
-import cn.com.heaton.advertisersdk.AdvertiserDevice;
-import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
-import cn.com.heaton.advertisersdk.utils.ByteUtils;
+import com.heaton.advertisersdk.AdvertiserClient;
+import com.heaton.advertisersdk.AdvertiserDevice;
+import com.heaton.advertisersdk.callback.AdvertiserScanCallback;
+import com.heaton.advertisersdk.utils.ByteUtils;
 import cn.com.heaton.avertisetest.adapter.SendAdvertiserAdapter;
 import cn.com.heaton.avertisetest.app.LogIntercept;
 import cn.com.heaton.avertisetest.app.LogParseStrategy;

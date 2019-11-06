@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cn.com.heaton.advertisersdk.AdvertiserDevice;
+import com.heaton.advertisersdk.AdvertiserDevice;
 import cn.com.heaton.avertisetest.R;
 import cn.com.heaton.avertisetest.base.BaseAdapter;
 

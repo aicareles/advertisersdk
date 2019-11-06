@@ -96,7 +96,47 @@
 -keep public class android.support.design.R$* { *; }
 
 # 不混淆某个类（使用者可以看到类名）
--keep class cn.com.heaton.advertisersdk.**{*; }
+#-keep class com.heaton.advertisersdk.AdvertiserClient { *; }
+# 不混淆某个包所有的类,包括子包下的
+#-keep class com.heaton.advertisersdk.**{*; }
+# 不混淆某个类的子类
+#-keep class * extends com.biaobiao.example.Test { *; }
+# 保留该包下的类名不会被混淆
+#-keep class 完整包名.*
+# 保持指定类里面public修饰的成员变量和public修饰的方法。
+#-keep class 完整包名{
+#    public <fields>;
+#    public <methods>;
+#}
+
+-keep class com.heaton.advertisersdk.AdvertiserClient{
+    public <methods>;
+}
+-keep class com.heaton.advertisersdk.AdvertiserDevice{*;}
+-keep class com.heaton.advertisersdk.AdvertiserConfig{*;}
+-keep class com.heaton.advertisersdk.proxy.RequestProxy{*;}
+-keep class com.heaton.advertisersdk.utils.ByteUtils{*;}
+-keep class com.heaton.advertisersdk.request.**{*;}
+-keep class com.heaton.advertisersdk.callback.**{*;}
+-keep class com.heaton.advertisersdk.interceptor.**{*;}
+
+# Understand the @Keep support annotation.通过注解的方式,不混淆带有注解的类或方法
+#-keep class android.support.annotation.Keep
+#
+#-keep @android.support.annotation.Keep class * {*;}
+#
+#-keepclasseswithmembers class * {
+#    @android.support.annotation.Keep public <methods>;
+#}
+#
+#-keepclasseswithmembers class * {
+#    @android.support.annotation.Keep <fields>;
+#}
+#
+#-keepclasseswithmembers class * {
+#    @android.support.annotation.Keep <init>(...);
+#}
+
 
 #Natvie 方法不混淆
 -keepclasseswithmembernames class * {

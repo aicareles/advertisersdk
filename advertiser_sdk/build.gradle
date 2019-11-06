@@ -1,3 +1,5 @@
+import proguard.gradle.ProGuardTask
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 group='com.heaton.aicareles'
@@ -40,7 +42,7 @@ android {
     /*task makeJar(type: ProGuardTask, dependsOn: "build") {
         //删除存在的
         delete 'libs/advertise_sdk.jar'
-        injars 'build/intermediates/intermediate-jars/release/classes.jar' // 未混淆的jar路径
+        injars 'build/intermediates/packaged-classes/release/classes.jar' // 未混淆的jar路径
         outjars 'libs/advertise_sdk.jar' // 混淆后的jar输出路径
         configuration 'proguard-rules.pro' // 混淆协议
     }*/

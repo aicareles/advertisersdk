@@ -2,8 +2,8 @@ package cn.com.heaton.avertisetest.app;
 
 import java.util.Random;
 
-import cn.com.heaton.advertisersdk.AdvertiserClient;
-import cn.com.heaton.advertisersdk.AdvertiserDevice;
+import com.heaton.advertisersdk.AdvertiserClient;
+import com.heaton.advertisersdk.AdvertiserDevice;
 
 /**
  * description 2.4G发送数据协议类

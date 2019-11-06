@@ -1,370 +1,332 @@
-cn.com.heaton.advertisersdk.AdvertiserClient
-cn.com.heaton.advertisersdk.AdvertiserClient: java.lang.String TAG
-cn.com.heaton.advertisersdk.AdvertiserClient: cn.com.heaton.advertisersdk.AdvertiserClient sInstance
-cn.com.heaton.advertisersdk.AdvertiserClient: android.content.Context mContext
-cn.com.heaton.advertisersdk.AdvertiserClient: cn.com.heaton.advertisersdk.proxy.RequestLisenter mRequest
-cn.com.heaton.advertisersdk.AdvertiserClient: int REQUEST_ENABLE_BT
-cn.com.heaton.advertisersdk.AdvertiserClient: android.bluetooth.BluetoothAdapter mBluetoothAdapter
-cn.com.heaton.advertisersdk.AdvertiserClient: AdvertiserClient()
-cn.com.heaton.advertisersdk.AdvertiserClient: cn.com.heaton.advertisersdk.AdvertiserClient getDefault()
-cn.com.heaton.advertisersdk.AdvertiserClient: void proxy(android.content.Context)
-cn.com.heaton.advertisersdk.AdvertiserClient: cn.com.heaton.advertisersdk.AdvertiserClient create(android.content.Context)
-cn.com.heaton.advertisersdk.AdvertiserClient: cn.com.heaton.advertisersdk.config.AdvertiserConfig config()
-cn.com.heaton.advertisersdk.AdvertiserClient: void searchDevice(cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
-cn.com.heaton.advertisersdk.AdvertiserClient: void connectDevice(cn.com.heaton.advertisersdk.AdvertiserDevice,cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
-cn.com.heaton.advertisersdk.AdvertiserClient: void startAdvertising(byte[])
-cn.com.heaton.advertisersdk.AdvertiserClient: void startAdvertising(byte[],int)
-cn.com.heaton.advertisersdk.AdvertiserClient: void stopAdvertising()
-cn.com.heaton.advertisersdk.AdvertiserClient: void stopAdvertising(java.lang.Long)
-cn.com.heaton.advertisersdk.AdvertiserClient: void startScan(cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback)
-cn.com.heaton.advertisersdk.AdvertiserClient: void startScan()
-cn.com.heaton.advertisersdk.AdvertiserClient: void stopScan()
-cn.com.heaton.advertisersdk.AdvertiserClient: boolean isScanning()
-cn.com.heaton.advertisersdk.AdvertiserClient: android.content.Context getContext()
-cn.com.heaton.advertisersdk.AdvertiserClient: boolean isBleEnable()
-cn.com.heaton.advertisersdk.AdvertiserClient: boolean isSupportAdvertiser()
-cn.com.heaton.advertisersdk.AdvertiserClient: void turnOnBlueTooth(android.app.Activity)
-cn.com.heaton.advertisersdk.AdvertiserClient: boolean turnOffBlueTooth()
-cn.com.heaton.advertisersdk.AdvertiserDevice
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String TAG
-cn.com.heaton.advertisersdk.AdvertiserDevice: int pairState
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String bleAddress
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String bleName
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String bleAlias
-cn.com.heaton.advertisersdk.AdvertiserDevice: boolean isOn
-cn.com.heaton.advertisersdk.AdvertiserDevice: byte[] rollingCode
-cn.com.heaton.advertisersdk.AdvertiserDevice: byte[] randomCode
-cn.com.heaton.advertisersdk.AdvertiserDevice: android.os.Parcelable$Creator CREATOR
-cn.com.heaton.advertisersdk.AdvertiserDevice: AdvertiserDevice()
-cn.com.heaton.advertisersdk.AdvertiserDevice: AdvertiserDevice(android.bluetooth.BluetoothDevice)
-cn.com.heaton.advertisersdk.AdvertiserDevice: AdvertiserDevice(android.os.Parcel)
-cn.com.heaton.advertisersdk.AdvertiserDevice: boolean isPaired()
-cn.com.heaton.advertisersdk.AdvertiserDevice: boolean isPairing()
-cn.com.heaton.advertisersdk.AdvertiserDevice: int getPairState()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setPairState(int)
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String getBleAddress()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setBleAddress(java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String getBleName()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setBleName(java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String getBleAlias()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setBleAlias(java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserDevice: byte[] getRollingCode()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setRollingCode(byte[])
-cn.com.heaton.advertisersdk.AdvertiserDevice: byte[] getRandomCode()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setRandomCode(byte[])
-cn.com.heaton.advertisersdk.AdvertiserDevice: byte[] getProductCode()
-cn.com.heaton.advertisersdk.AdvertiserDevice: boolean isOn()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void setOn(boolean)
-cn.com.heaton.advertisersdk.AdvertiserDevice: java.lang.String toString()
-cn.com.heaton.advertisersdk.AdvertiserDevice: int describeContents()
-cn.com.heaton.advertisersdk.AdvertiserDevice: void writeToParcel(android.os.Parcel,int)
-cn.com.heaton.advertisersdk.AdvertiserDevice: void <clinit>()
-cn.com.heaton.advertisersdk.AdvertiserDevice$1
-cn.com.heaton.advertisersdk.AdvertiserDevice$1: AdvertiserDevice$1()
-cn.com.heaton.advertisersdk.AdvertiserDevice$1: cn.com.heaton.advertisersdk.AdvertiserDevice createFromParcel(android.os.Parcel)
-cn.com.heaton.advertisersdk.AdvertiserDevice$1: cn.com.heaton.advertisersdk.AdvertiserDevice[] newArray(int)
-cn.com.heaton.advertisersdk.AdvertiserDevice$1: java.lang.Object[] newArray(int)
-cn.com.heaton.advertisersdk.AdvertiserDevice$1: java.lang.Object createFromParcel(android.os.Parcel)
-cn.com.heaton.advertisersdk.AdvertiserFactory
-cn.com.heaton.advertisersdk.AdvertiserFactory: AdvertiserFactory()
-cn.com.heaton.advertisersdk.AdvertiserFactory: cn.com.heaton.advertisersdk.AdvertiserDevice create(java.lang.Class,android.bluetooth.BluetoothDevice)
-cn.com.heaton.advertisersdk.AdvertiserHandler
-cn.com.heaton.advertisersdk.AdvertiserHandler: java.lang.String TAG
-cn.com.heaton.advertisersdk.AdvertiserHandler: cn.com.heaton.advertisersdk.AdvertiserHandler sHandler
-cn.com.heaton.advertisersdk.AdvertiserHandler: cn.com.heaton.advertisersdk.AdvertiserHandler getHandler()
-cn.com.heaton.advertisersdk.AdvertiserHandler: AdvertiserHandler(android.os.Looper)
-cn.com.heaton.advertisersdk.AdvertiserLog
-cn.com.heaton.advertisersdk.AdvertiserLog: java.lang.String TAG
-cn.com.heaton.advertisersdk.AdvertiserLog: boolean isDebug
-cn.com.heaton.advertisersdk.AdvertiserLog: AdvertiserLog()
-cn.com.heaton.advertisersdk.AdvertiserLog: void init()
-cn.com.heaton.advertisersdk.AdvertiserLog: java.lang.String getSubTag(java.lang.Object)
-cn.com.heaton.advertisersdk.AdvertiserLog: void e(java.lang.Object,java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserLog: void i(java.lang.Object,java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserLog: void w(java.lang.Object,java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserLog: void d(java.lang.Object,java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserLog: java.lang.String buildMessge(java.lang.String,java.lang.String)
-cn.com.heaton.advertisersdk.AdvertiserLog: void <clinit>()
-cn.com.heaton.advertisersdk.AdvertiserStates
-cn.com.heaton.advertisersdk.AdvertiserStates: AdvertiserStates()
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int WriteFailed
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int WriteSuccess
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int WriteCancel
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int BleNotOpen
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int PermissionError
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int Processing
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int NotFindDevice
-cn.com.heaton.advertisersdk.AdvertiserStates$ResultCode: int Data_Command_Error
-cn.com.heaton.advertisersdk.AdvertiserStates$StatusCode
-cn.com.heaton.advertisersdk.AdvertiserStates$StatusCode: int UNPAIR
-cn.com.heaton.advertisersdk.AdvertiserStates$StatusCode: int PAIRED
-cn.com.heaton.advertisersdk.AdvertiserStates$StatusCode: int PAIRING
-cn.com.heaton.advertisersdk.AdvertiserStates$StatusCode: int PAIRTIMEOUT
-cn.com.heaton.advertisersdk.BuildConfig
-cn.com.heaton.advertisersdk.BuildConfig: boolean DEBUG
-cn.com.heaton.advertisersdk.BuildConfig: java.lang.String APPLICATION_ID
-cn.com.heaton.advertisersdk.BuildConfig: java.lang.String BUILD_TYPE
-cn.com.heaton.advertisersdk.BuildConfig: java.lang.String FLAVOR
-cn.com.heaton.advertisersdk.BuildConfig: int VERSION_CODE
-cn.com.heaton.advertisersdk.BuildConfig: java.lang.String VERSION_NAME
-cn.com.heaton.advertisersdk.BuildConfig: BuildConfig()
-cn.com.heaton.advertisersdk.annotation.Implement
-cn.com.heaton.advertisersdk.annotation.Implement: java.lang.Class value()
-cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback
-cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback: void onAvertiseConnected(cn.com.heaton.advertisersdk.AdvertiserDevice)
-cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback: void onAvertiseConnectTimeOut()
-cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback
-cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: AdvertiserDiscoverCallback()
-cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: void onDiscoverStart()
-cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: void onAvertiseScan(cn.com.heaton.advertisersdk.AdvertiserDevice)
-cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: void onDiscoverStop()
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback: AdvertiserScanCallback()
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onStart()
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onStop()
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onLeScan(java.lang.Object,int,byte[])
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onParsedData(java.lang.Object,byte[])
-cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onScanFailed(int)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String RANDOM_VALUE
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String DEFALUT_PREFIX_NAME
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: byte[] DEFALUT_AVERTISE_PRODUCT
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig sConfig
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String logTAG
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: boolean logAvertiseExceptions
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: boolean throAvertiseException
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: long connectTimeout
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: long scanPeriod
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: int retryConnect
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String prefixAvertiseName
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: byte[] avertiseProductCode
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String addressPrefix
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: AdvertiserConfig()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig config()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String getLogTAG()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: void setLogTAG(java.lang.String)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: boolean isLogAvertiseExceptions()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setLogAvertiseExceptions(boolean)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: boolean isThroAvertiseException()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setThroAvertiseException(boolean)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: long getConnectTimeout()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setConnectTimeout(long)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: long getScanPeriod()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setScanPeriod(long)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: int getRetryConnect()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setRetryConnect(int)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String getPrefixAvertiseName()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setPrefixAvertiseName(java.lang.String)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: byte[] getAvertiseProductCode()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setAvertiseProductCode(byte[])
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: java.lang.String getAddressPrefix()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.config.AdvertiserConfig setAddressPrefix(java.lang.String)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: cn.com.heaton.advertisersdk.AdvertiserClient create(android.content.Context)
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: byte[] generateRandom()
-cn.com.heaton.advertisersdk.config.AdvertiserConfig: void <clinit>()
-cn.com.heaton.advertisersdk.exception.AdvertiserException
-cn.com.heaton.advertisersdk.exception.AdvertiserException: long serialVersionUID
-cn.com.heaton.advertisersdk.exception.AdvertiserException: int ERROR_CODE_NOTSUPPORT
-cn.com.heaton.advertisersdk.exception.AdvertiserException: int ERROR_CODE_PERMISSION
-cn.com.heaton.advertisersdk.exception.AdvertiserException: java.lang.Throwable ex
-cn.com.heaton.advertisersdk.exception.AdvertiserException: AdvertiserException()
-cn.com.heaton.advertisersdk.exception.AdvertiserException: AdvertiserException(java.lang.String)
-cn.com.heaton.advertisersdk.exception.AdvertiserException: AdvertiserException(java.lang.String,java.lang.Throwable)
-cn.com.heaton.advertisersdk.exception.AdvertiserException: AdvertiserException(java.lang.Throwable)
-cn.com.heaton.advertisersdk.exception.AdvertiserException: java.lang.Throwable getException()
-cn.com.heaton.advertisersdk.exception.AdvertiserException: java.lang.Throwable getCause()
-cn.com.heaton.advertisersdk.exception.AdvertiserUnsupportException
-cn.com.heaton.advertisersdk.exception.AdvertiserUnsupportException: long serialVersionUID
-cn.com.heaton.advertisersdk.exception.AdvertiserUnsupportException: AdvertiserUnsupportException()
-cn.com.heaton.advertisersdk.exception.AdvertiserUnsupportException: AdvertiserUnsupportException(java.lang.String)
-cn.com.heaton.advertisersdk.exception.AdvertiserUnsupportException: AdvertiserUnsupportException(java.lang.String,java.lang.Throwable)
-cn.com.heaton.advertisersdk.proxy.RequestImpl
-cn.com.heaton.advertisersdk.proxy.RequestImpl: cn.com.heaton.advertisersdk.proxy.RequestImpl instance
-cn.com.heaton.advertisersdk.proxy.RequestImpl: RequestImpl()
-cn.com.heaton.advertisersdk.proxy.RequestImpl: cn.com.heaton.advertisersdk.proxy.RequestImpl getRequestImpl()
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void startScan(cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback)
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void startScan()
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void stopScan()
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void startAvertise(byte[])
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void startAvertise(byte[],int)
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void stopAvertise()
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void preparePair(cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void startPair(cn.com.heaton.advertisersdk.AdvertiserDevice,cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
-cn.com.heaton.advertisersdk.proxy.RequestImpl: void <clinit>()
-cn.com.heaton.advertisersdk.proxy.RequestLisenter
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void startScan(cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback)
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void startScan()
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void stopScan()
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void startAvertise(byte[])
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void startAvertise(byte[],int)
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void stopAvertise()
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void preparePair(cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
-cn.com.heaton.advertisersdk.proxy.RequestLisenter: void startPair(cn.com.heaton.advertisersdk.AdvertiserDevice,cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
-cn.com.heaton.advertisersdk.proxy.RequestProxy
-cn.com.heaton.advertisersdk.proxy.RequestProxy: java.lang.String TAG
-cn.com.heaton.advertisersdk.proxy.RequestProxy: java.lang.Object receiver
-cn.com.heaton.advertisersdk.proxy.RequestProxy: cn.com.heaton.advertisersdk.proxy.RequestProxy instance
-cn.com.heaton.advertisersdk.proxy.RequestProxy: RequestProxy()
-cn.com.heaton.advertisersdk.proxy.RequestProxy: cn.com.heaton.advertisersdk.proxy.RequestProxy getRequestProxy()
-cn.com.heaton.advertisersdk.proxy.RequestProxy: java.lang.Object bindProxy(android.content.Context,java.lang.Object)
-cn.com.heaton.advertisersdk.proxy.RequestProxy: java.lang.Object invoke(java.lang.Object,java.lang.reflect.Method,java.lang.Object[])
-cn.com.heaton.advertisersdk.proxy.RequestProxy: void <clinit>()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: java.lang.String TAG
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.os.Handler mHandler
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.BluetoothAdapter bluetoothAdapter
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.BluetoothLeAdvertiser mAdvertiser
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseSettings myAdvertiseSettings
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseData myAdvertiseData
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: byte[] calculatedPayload
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: byte[] pairload
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: java.lang.Runnable stopAvertiseRunnable
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseCallback mAdvertiseCallback
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: AdvertiserRequest()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void startAdvertising(byte[],int)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void startAdvertising(byte[])
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void stopAdvertising()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void stopAdvertising(java.lang.Long)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void resetDiscover(cn.com.heaton.advertisersdk.AdvertiserDevice)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void discoverDevice(cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void connectDevice(cn.com.heaton.advertisersdk.AdvertiserDevice,cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: void retryConnect()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseCallback access$000(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.BluetoothLeAdvertiser access$100(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: byte[] access$200(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseData access$302(cn.com.heaton.advertisersdk.request.AdvertiserRequest,android.bluetooth.le.AdvertiseData)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseSettings access$400(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseData access$300(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$1
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$1: byte[] val$payload
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$1: int val$bleChannel
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$1: cn.com.heaton.advertisersdk.request.AdvertiserRequest this$0
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$1: AdvertiserRequest$1(cn.com.heaton.advertisersdk.request.AdvertiserRequest,byte[],int)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$1: void run()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$2
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$2: cn.com.heaton.advertisersdk.request.AdvertiserRequest this$0
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$2: AdvertiserRequest$2(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$2: void run()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$3
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$3: cn.com.heaton.advertisersdk.request.AdvertiserRequest this$0
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$3: AdvertiserRequest$3(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$3: void run()
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$4
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$4: cn.com.heaton.advertisersdk.request.AdvertiserRequest this$0
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$4: AdvertiserRequest$4(cn.com.heaton.advertisersdk.request.AdvertiserRequest)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$4: void onStartSuccess(android.bluetooth.le.AdvertiseSettings)
-cn.com.heaton.advertisersdk.request.AdvertiserRequest$4: void onStartFailure(int)
-cn.com.heaton.advertisersdk.request.ParseRequest
-cn.com.heaton.advertisersdk.request.ParseRequest: java.lang.String TAG
-cn.com.heaton.advertisersdk.request.ParseRequest: int BLE_GAP_AD_TYPE_FLAGS
-cn.com.heaton.advertisersdk.request.ParseRequest: int BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_COMPLETE
-cn.com.heaton.advertisersdk.request.ParseRequest: int BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA
-cn.com.heaton.advertisersdk.request.ParseRequest: long SINGLE_CONNECT_TIME
-cn.com.heaton.advertisersdk.request.ParseRequest: cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback mAvertiseDiscoverCallback
-cn.com.heaton.advertisersdk.request.ParseRequest: cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback mAvertiseConnectCallback
-cn.com.heaton.advertisersdk.request.ParseRequest: android.util.SparseArray records
-cn.com.heaton.advertisersdk.request.ParseRequest: java.util.List mDevicePool
-cn.com.heaton.advertisersdk.request.ParseRequest: int retryCount
-cn.com.heaton.advertisersdk.request.ParseRequest: android.os.Handler mHandler
-cn.com.heaton.advertisersdk.request.ParseRequest: java.lang.Runnable discoverStopRunnable
-cn.com.heaton.advertisersdk.request.ParseRequest: java.lang.Runnable retryRunnable
-cn.com.heaton.advertisersdk.request.ParseRequest: ParseRequest()
-cn.com.heaton.advertisersdk.request.ParseRequest: void setAvertiseDiscoverCallback(cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
-cn.com.heaton.advertisersdk.request.ParseRequest: void setAvertiseConnectCallback(cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
-cn.com.heaton.advertisersdk.request.ParseRequest: void parseScanRecord(cn.com.heaton.advertisersdk.AdvertiserDevice,byte[],cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback)
-cn.com.heaton.advertisersdk.request.ParseRequest: cn.com.heaton.advertisersdk.AdvertiserDevice takeDevicePool(cn.com.heaton.advertisersdk.AdvertiserDevice)
-cn.com.heaton.advertisersdk.request.ParseRequest: cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback access$000(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest: int access$100(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest: int access$108(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest: android.os.Handler access$200(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest: java.lang.Runnable access$300(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest: cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback access$400(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest$1
-cn.com.heaton.advertisersdk.request.ParseRequest$1: cn.com.heaton.advertisersdk.request.ParseRequest this$0
-cn.com.heaton.advertisersdk.request.ParseRequest$1: ParseRequest$1(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest$1: void run()
-cn.com.heaton.advertisersdk.request.ParseRequest$2
-cn.com.heaton.advertisersdk.request.ParseRequest$2: cn.com.heaton.advertisersdk.request.ParseRequest this$0
-cn.com.heaton.advertisersdk.request.ParseRequest$2: ParseRequest$2(cn.com.heaton.advertisersdk.request.ParseRequest)
-cn.com.heaton.advertisersdk.request.ParseRequest$2: void run()
-cn.com.heaton.advertisersdk.request.Rproxy
-cn.com.heaton.advertisersdk.request.Rproxy: cn.com.heaton.advertisersdk.request.Rproxy s_instance
-cn.com.heaton.advertisersdk.request.Rproxy: java.util.Map mRequestObjs
-cn.com.heaton.advertisersdk.request.Rproxy: cn.com.heaton.advertisersdk.request.Rproxy getProxy()
-cn.com.heaton.advertisersdk.request.Rproxy: Rproxy()
-cn.com.heaton.advertisersdk.request.Rproxy: void init(android.content.Context)
-cn.com.heaton.advertisersdk.request.Rproxy: java.lang.Object getRequest(java.lang.Class)
-cn.com.heaton.advertisersdk.request.Rproxy: java.util.List getRequestsClass(android.content.Context,java.lang.String)
-cn.com.heaton.advertisersdk.request.Rproxy: void <clinit>()
-cn.com.heaton.advertisersdk.request.ScanRequest
-cn.com.heaton.advertisersdk.request.ScanRequest: java.lang.String TAG
-cn.com.heaton.advertisersdk.request.ScanRequest: boolean mScanning
-cn.com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.BluetoothAdapter mBluetoothAdapter
-cn.com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.le.BluetoothLeScanner mScanner
-cn.com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.le.ScanSettings mScannerSetting
-cn.com.heaton.advertisersdk.request.ScanRequest: java.util.List mFilters
-cn.com.heaton.advertisersdk.request.ScanRequest: cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback mScanCallback
-cn.com.heaton.advertisersdk.request.ScanRequest: java.util.ArrayList mScanDevices
-cn.com.heaton.advertisersdk.request.ScanRequest: cn.com.heaton.advertisersdk.request.ParseRequest mParseRequest
-cn.com.heaton.advertisersdk.request.ScanRequest: android.os.Handler mHandler
-cn.com.heaton.advertisersdk.request.ScanRequest: java.lang.Runnable stopRunnble
-cn.com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.le.ScanCallback mScannerCallback
-cn.com.heaton.advertisersdk.request.ScanRequest: ScanRequest()
-cn.com.heaton.advertisersdk.request.ScanRequest: void startScan(cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback)
-cn.com.heaton.advertisersdk.request.ScanRequest: void startScan()
-cn.com.heaton.advertisersdk.request.ScanRequest: void stopScan()
-cn.com.heaton.advertisersdk.request.ScanRequest: boolean isScanning()
-cn.com.heaton.advertisersdk.request.ScanRequest: cn.com.heaton.advertisersdk.AdvertiserDevice getDevice(java.lang.String)
-cn.com.heaton.advertisersdk.request.ScanRequest: cn.com.heaton.advertisersdk.AdvertiserDevice access$000(cn.com.heaton.advertisersdk.request.ScanRequest,java.lang.String)
-cn.com.heaton.advertisersdk.request.ScanRequest: java.util.ArrayList access$100(cn.com.heaton.advertisersdk.request.ScanRequest)
-cn.com.heaton.advertisersdk.request.ScanRequest: cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback access$200(cn.com.heaton.advertisersdk.request.ScanRequest)
-cn.com.heaton.advertisersdk.request.ScanRequest: cn.com.heaton.advertisersdk.request.ParseRequest access$300(cn.com.heaton.advertisersdk.request.ScanRequest)
-cn.com.heaton.advertisersdk.request.ScanRequest$1
-cn.com.heaton.advertisersdk.request.ScanRequest$1: cn.com.heaton.advertisersdk.request.ScanRequest this$0
-cn.com.heaton.advertisersdk.request.ScanRequest$1: ScanRequest$1(cn.com.heaton.advertisersdk.request.ScanRequest)
-cn.com.heaton.advertisersdk.request.ScanRequest$1: void run()
-cn.com.heaton.advertisersdk.request.ScanRequest$2
-cn.com.heaton.advertisersdk.request.ScanRequest$2: cn.com.heaton.advertisersdk.request.ScanRequest this$0
-cn.com.heaton.advertisersdk.request.ScanRequest$2: ScanRequest$2(cn.com.heaton.advertisersdk.request.ScanRequest)
-cn.com.heaton.advertisersdk.request.ScanRequest$2: void onScanResult(int,android.bluetooth.le.ScanResult)
-cn.com.heaton.advertisersdk.request.ScanRequest$2: void onBatchScanResults(java.util.List)
-cn.com.heaton.advertisersdk.request.ScanRequest$2: void onScanFailed(int)
-cn.com.heaton.advertisersdk.utils.ByteUtils
-cn.com.heaton.advertisersdk.utils.ByteUtils: ByteUtils()
-cn.com.heaton.advertisersdk.utils.ByteUtils: short bytes2Short2(byte[])
-cn.com.heaton.advertisersdk.utils.ByteUtils: java.lang.String BinaryToHexString(byte[])
-cn.com.heaton.advertisersdk.utils.ByteUtils: byte[] short2Bytes(short)
-cn.com.heaton.advertisersdk.utils.ByteUtils: byte[] int2byte(int)
-cn.com.heaton.advertisersdk.utils.ByteUtils: int byte2int(byte[])
-cn.com.heaton.advertisersdk.utils.ByteUtils: java.lang.String byteArrayToHexStr(byte[])
-cn.com.heaton.advertisersdk.utils.ByteUtils: byte[] hexStrToByteArray(java.lang.String)
-cn.com.heaton.advertisersdk.utils.SPUtils
-cn.com.heaton.advertisersdk.utils.SPUtils: java.lang.String FILE_NAME
-cn.com.heaton.advertisersdk.utils.SPUtils: SPUtils()
-cn.com.heaton.advertisersdk.utils.SPUtils: void put(android.content.Context,java.lang.String,java.lang.Object)
-cn.com.heaton.advertisersdk.utils.SPUtils: java.lang.Object get(android.content.Context,java.lang.String,java.lang.Object)
-cn.com.heaton.advertisersdk.utils.SPUtils: void remove(android.content.Context,java.lang.String)
-cn.com.heaton.advertisersdk.utils.SPUtils: void clear(android.content.Context)
-cn.com.heaton.advertisersdk.utils.SPUtils: boolean contains(android.content.Context,java.lang.String)
-cn.com.heaton.advertisersdk.utils.SPUtils: java.util.Map getAll(android.content.Context)
-cn.com.heaton.advertisersdk.utils.SPUtils$SharedPreferencesCompat
-cn.com.heaton.advertisersdk.utils.SPUtils$SharedPreferencesCompat: java.lang.reflect.Method sApplyMethod
-cn.com.heaton.advertisersdk.utils.SPUtils$SharedPreferencesCompat: SPUtils$SharedPreferencesCompat()
-cn.com.heaton.advertisersdk.utils.SPUtils$SharedPreferencesCompat: java.lang.reflect.Method findApplyMethod()
-cn.com.heaton.advertisersdk.utils.SPUtils$SharedPreferencesCompat: void apply(android.content.SharedPreferences$Editor)
-cn.com.heaton.advertisersdk.utils.SPUtils$SharedPreferencesCompat: void <clinit>()
-cn.com.heaton.advertisersdk.utils.TaskExecutor
-cn.com.heaton.advertisersdk.utils.TaskExecutor: java.util.concurrent.Executor mParallelExecutor
-cn.com.heaton.advertisersdk.utils.TaskExecutor: java.util.concurrent.Executor mSerialExecutor
-cn.com.heaton.advertisersdk.utils.TaskExecutor: android.os.Handler sHandler
-cn.com.heaton.advertisersdk.utils.TaskExecutor: TaskExecutor()
-cn.com.heaton.advertisersdk.utils.TaskExecutor: void runOnUIThread(java.lang.Runnable)
-cn.com.heaton.advertisersdk.utils.TaskExecutor: void runOnUIThreadDelay(java.lang.Runnable,long)
-cn.com.heaton.advertisersdk.utils.TaskExecutor: void executeTask(java.lang.Runnable)
-cn.com.heaton.advertisersdk.utils.TaskExecutor: void executeTaskSerially(java.lang.Runnable)
-cn.com.heaton.advertisersdk.utils.TaskExecutor: void executeTask(java.lang.Runnable,boolean)
-cn.com.heaton.advertisersdk.utils.TaskExecutor: void <clinit>()
+com.heaton.advertisersdk.AdvertiserClient
+com.heaton.advertisersdk.AdvertiserClient: com.heaton.advertisersdk.AdvertiserClient getDefault()
+com.heaton.advertisersdk.AdvertiserClient: com.heaton.advertisersdk.AdvertiserClient create(android.content.Context)
+com.heaton.advertisersdk.AdvertiserClient: com.heaton.advertisersdk.AdvertiserConfig config()
+com.heaton.advertisersdk.AdvertiserClient: void search(com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
+com.heaton.advertisersdk.AdvertiserClient: void connect(com.heaton.advertisersdk.AdvertiserDevice,com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
+com.heaton.advertisersdk.AdvertiserClient: void startAdvertising(byte[])
+com.heaton.advertisersdk.AdvertiserClient: void startAdvertising(byte[],int)
+com.heaton.advertisersdk.AdvertiserClient: void stopAdvertising()
+com.heaton.advertisersdk.AdvertiserClient: void stopAdvertising(java.lang.Long)
+com.heaton.advertisersdk.AdvertiserClient: void startScan(com.heaton.advertisersdk.callback.AdvertiserScanCallback)
+com.heaton.advertisersdk.AdvertiserClient: void startScan()
+com.heaton.advertisersdk.AdvertiserClient: void stopScan()
+com.heaton.advertisersdk.AdvertiserClient: boolean isScanning()
+com.heaton.advertisersdk.AdvertiserClient: android.content.Context getContext()
+com.heaton.advertisersdk.AdvertiserClient: boolean isBleEnable()
+com.heaton.advertisersdk.AdvertiserClient: boolean isSupportAdvertiser()
+com.heaton.advertisersdk.AdvertiserClient: void turnOnBlueTooth(android.app.Activity)
+com.heaton.advertisersdk.AdvertiserClient: boolean turnOffBlueTooth()
+com.heaton.advertisersdk.AdvertiserConfig
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String RANDOM_VALUE
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String DEFALUT_PREFIX_NAME
+com.heaton.advertisersdk.AdvertiserConfig: byte[] DEFALUT_AVERTISE_PRODUCT
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig sConfig
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.interceptor.Interceptor interceptor
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.interceptor.ParseStrategy parseStrategy
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String logTAG
+com.heaton.advertisersdk.AdvertiserConfig: boolean logAvertiseExceptions
+com.heaton.advertisersdk.AdvertiserConfig: boolean throAvertiseException
+com.heaton.advertisersdk.AdvertiserConfig: long connectTimeout
+com.heaton.advertisersdk.AdvertiserConfig: long scanPeriod
+com.heaton.advertisersdk.AdvertiserConfig: int retryConnect
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String prefixAvertiseName
+com.heaton.advertisersdk.AdvertiserConfig: byte[] avertiseProductCode
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String addressPrefix
+com.heaton.advertisersdk.AdvertiserConfig: AdvertiserConfig()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig config()
+com.heaton.advertisersdk.AdvertiserConfig: byte[] generateRandom()
+com.heaton.advertisersdk.AdvertiserConfig: void <clinit>()
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String getLogTAG()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setLogTAG(java.lang.String)
+com.heaton.advertisersdk.AdvertiserConfig: boolean isLogAvertiseExceptions()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setLogAvertiseExceptions(boolean)
+com.heaton.advertisersdk.AdvertiserConfig: boolean isThroAvertiseException()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setThroAvertiseException(boolean)
+com.heaton.advertisersdk.AdvertiserConfig: long getConnectTimeout()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setConnectTimeout(long)
+com.heaton.advertisersdk.AdvertiserConfig: long getScanPeriod()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setScanPeriod(long)
+com.heaton.advertisersdk.AdvertiserConfig: int getRetryConnect()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setRetryConnect(int)
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String getPrefixAvertiseName()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setPrefixAvertiseName(java.lang.String)
+com.heaton.advertisersdk.AdvertiserConfig: byte[] getAvertiseProductCode()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setAvertiseProductCode(byte[])
+com.heaton.advertisersdk.AdvertiserConfig: java.lang.String getAddressPrefix()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setAddressPrefix(java.lang.String)
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.interceptor.Interceptor getInterceptor()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setInterceptor(com.heaton.advertisersdk.interceptor.Interceptor)
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.interceptor.ParseStrategy getParseStrategy()
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserConfig setParseStrategy(com.heaton.advertisersdk.interceptor.ParseStrategy)
+com.heaton.advertisersdk.AdvertiserConfig: com.heaton.advertisersdk.AdvertiserClient create(android.content.Context)
+com.heaton.advertisersdk.AdvertiserDevice
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String TAG
+com.heaton.advertisersdk.AdvertiserDevice: android.os.Parcelable$Creator CREATOR
+com.heaton.advertisersdk.AdvertiserDevice: int pairState
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String bleAddress
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String bleName
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String bleAlias
+com.heaton.advertisersdk.AdvertiserDevice: boolean isOn
+com.heaton.advertisersdk.AdvertiserDevice: byte[] rollingCode
+com.heaton.advertisersdk.AdvertiserDevice: byte[] randomCode
+com.heaton.advertisersdk.AdvertiserDevice: AdvertiserDevice()
+com.heaton.advertisersdk.AdvertiserDevice: AdvertiserDevice(android.bluetooth.BluetoothDevice)
+com.heaton.advertisersdk.AdvertiserDevice: AdvertiserDevice(android.os.Parcel)
+com.heaton.advertisersdk.AdvertiserDevice: void <clinit>()
+com.heaton.advertisersdk.AdvertiserDevice: boolean isPaired()
+com.heaton.advertisersdk.AdvertiserDevice: boolean isPairing()
+com.heaton.advertisersdk.AdvertiserDevice: int getPairState()
+com.heaton.advertisersdk.AdvertiserDevice: void setPairState(int)
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String getBleAddress()
+com.heaton.advertisersdk.AdvertiserDevice: void setBleAddress(java.lang.String)
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String getBleName()
+com.heaton.advertisersdk.AdvertiserDevice: void setBleName(java.lang.String)
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String getBleAlias()
+com.heaton.advertisersdk.AdvertiserDevice: void setBleAlias(java.lang.String)
+com.heaton.advertisersdk.AdvertiserDevice: byte[] getRollingCode()
+com.heaton.advertisersdk.AdvertiserDevice: void setRollingCode(byte[])
+com.heaton.advertisersdk.AdvertiserDevice: byte[] getRandomCode()
+com.heaton.advertisersdk.AdvertiserDevice: void setRandomCode(byte[])
+com.heaton.advertisersdk.AdvertiserDevice: byte[] getProductCode()
+com.heaton.advertisersdk.AdvertiserDevice: boolean isOn()
+com.heaton.advertisersdk.AdvertiserDevice: void setOn(boolean)
+com.heaton.advertisersdk.AdvertiserDevice: java.lang.String toString()
+com.heaton.advertisersdk.AdvertiserDevice: int describeContents()
+com.heaton.advertisersdk.AdvertiserDevice: void writeToParcel(android.os.Parcel,int)
+com.heaton.advertisersdk.callback.AdvertiserConnectCallback
+com.heaton.advertisersdk.callback.AdvertiserConnectCallback: void onAvertiseConnected(com.heaton.advertisersdk.AdvertiserDevice)
+com.heaton.advertisersdk.callback.AdvertiserConnectCallback: void onAvertiseConnectTimeOut()
+com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback
+com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: AdvertiserDiscoverCallback()
+com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: void onDiscoverStart()
+com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: void onAvertiseScan(com.heaton.advertisersdk.AdvertiserDevice)
+com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback: void onDiscoverStop()
+com.heaton.advertisersdk.callback.AdvertiserScanCallback
+com.heaton.advertisersdk.callback.AdvertiserScanCallback: AdvertiserScanCallback()
+com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onStart()
+com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onStop()
+com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onLeScan(java.lang.Object,int,byte[])
+com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onParsedData(java.lang.Object,byte[])
+com.heaton.advertisersdk.callback.AdvertiserScanCallback: void onScanFailed(int)
+com.heaton.advertisersdk.interceptor.Interceptor
+com.heaton.advertisersdk.interceptor.Interceptor: void request(com.heaton.advertisersdk.interceptor.Payload)
+com.heaton.advertisersdk.interceptor.Interceptor: void response(com.heaton.advertisersdk.interceptor.Payload)
+com.heaton.advertisersdk.interceptor.Interceptor$InterceptorHandler
+com.heaton.advertisersdk.interceptor.Interceptor$InterceptorHandler: com.heaton.advertisersdk.interceptor.Payload request(byte[])
+com.heaton.advertisersdk.interceptor.Interceptor$InterceptorHandler: com.heaton.advertisersdk.interceptor.Payload response(byte[])
+com.heaton.advertisersdk.interceptor.ParseStrategy
+com.heaton.advertisersdk.interceptor.ParseStrategy: com.heaton.advertisersdk.interceptor.Strategy resStrategy()
+com.heaton.advertisersdk.interceptor.ParseStrategy: com.heaton.advertisersdk.interceptor.Strategy reqStrategy()
+com.heaton.advertisersdk.interceptor.Payload
+com.heaton.advertisersdk.interceptor.Payload: byte[] scanResult
+com.heaton.advertisersdk.interceptor.Payload: byte[] productCode
+com.heaton.advertisersdk.interceptor.Payload: byte[] rollingCode
+com.heaton.advertisersdk.interceptor.Payload: byte[] randomCode
+com.heaton.advertisersdk.interceptor.Payload: byte commandCode
+com.heaton.advertisersdk.interceptor.Payload: Payload()
+com.heaton.advertisersdk.interceptor.Payload: java.lang.String byte2Str(byte[])
+com.heaton.advertisersdk.interceptor.Payload: byte[] getScanResult()
+com.heaton.advertisersdk.interceptor.Payload: void setScanResult(byte[])
+com.heaton.advertisersdk.interceptor.Payload: byte[] getProductCode()
+com.heaton.advertisersdk.interceptor.Payload: void setProductCode(byte[])
+com.heaton.advertisersdk.interceptor.Payload: byte[] getRollingCode()
+com.heaton.advertisersdk.interceptor.Payload: void setRollingCode(byte[])
+com.heaton.advertisersdk.interceptor.Payload: byte[] getRandomCode()
+com.heaton.advertisersdk.interceptor.Payload: void setRandomCode(byte[])
+com.heaton.advertisersdk.interceptor.Payload: byte getCommandCode()
+com.heaton.advertisersdk.interceptor.Payload: void setCommandCode(byte)
+com.heaton.advertisersdk.interceptor.Payload: void parse(byte[],com.heaton.advertisersdk.interceptor.Strategy)
+com.heaton.advertisersdk.interceptor.Payload: java.lang.String toString()
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: java.lang.ThreadLocal sInterceptorHandler
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: com.heaton.advertisersdk.interceptor.Interceptor interceptor
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: com.heaton.advertisersdk.interceptor.ParseStrategy strategy
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: com.heaton.advertisersdk.interceptor.Payload payload
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: RealInterceptorHandler()
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: com.heaton.advertisersdk.interceptor.RealInterceptorHandler getInstance()
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: void <clinit>()
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: com.heaton.advertisersdk.interceptor.Payload request(byte[])
+com.heaton.advertisersdk.interceptor.RealInterceptorHandler: com.heaton.advertisersdk.interceptor.Payload response(byte[])
+com.heaton.advertisersdk.interceptor.Strategy
+com.heaton.advertisersdk.interceptor.Strategy: int productIndex
+com.heaton.advertisersdk.interceptor.Strategy: int rollingIndex
+com.heaton.advertisersdk.interceptor.Strategy: int randomIndex
+com.heaton.advertisersdk.interceptor.Strategy: int commandIndex
+com.heaton.advertisersdk.interceptor.Strategy: Strategy(com.heaton.advertisersdk.interceptor.Strategy$Builder)
+com.heaton.advertisersdk.interceptor.Strategy: int access$400(com.heaton.advertisersdk.interceptor.Strategy)
+com.heaton.advertisersdk.interceptor.Strategy: int access$500(com.heaton.advertisersdk.interceptor.Strategy)
+com.heaton.advertisersdk.interceptor.Strategy: int access$600(com.heaton.advertisersdk.interceptor.Strategy)
+com.heaton.advertisersdk.interceptor.Strategy: int access$700(com.heaton.advertisersdk.interceptor.Strategy)
+com.heaton.advertisersdk.interceptor.Strategy: int getProductIndex()
+com.heaton.advertisersdk.interceptor.Strategy: void setProductIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy: int getRollingIndex()
+com.heaton.advertisersdk.interceptor.Strategy: void setRollingIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy: int getRandomIndex()
+com.heaton.advertisersdk.interceptor.Strategy: void setRandomIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy: int getCommandIndex()
+com.heaton.advertisersdk.interceptor.Strategy: void setCommandIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy$Builder
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int productIndex
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int rollingIndex
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int randomIndex
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int commandIndex
+com.heaton.advertisersdk.interceptor.Strategy$Builder: Strategy$Builder()
+com.heaton.advertisersdk.interceptor.Strategy$Builder: Strategy$Builder(com.heaton.advertisersdk.interceptor.Strategy)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int access$000(com.heaton.advertisersdk.interceptor.Strategy$Builder)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int access$100(com.heaton.advertisersdk.interceptor.Strategy$Builder)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int access$200(com.heaton.advertisersdk.interceptor.Strategy$Builder)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: int access$300(com.heaton.advertisersdk.interceptor.Strategy$Builder)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: com.heaton.advertisersdk.interceptor.Strategy$Builder productIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: com.heaton.advertisersdk.interceptor.Strategy$Builder rollingIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: com.heaton.advertisersdk.interceptor.Strategy$Builder randomIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: com.heaton.advertisersdk.interceptor.Strategy$Builder commandIndex(int)
+com.heaton.advertisersdk.interceptor.Strategy$Builder: com.heaton.advertisersdk.interceptor.Strategy build()
+com.heaton.advertisersdk.proxy.RequestProxy
+com.heaton.advertisersdk.proxy.RequestProxy: java.lang.String TAG
+com.heaton.advertisersdk.proxy.RequestProxy: com.heaton.advertisersdk.proxy.RequestProxy instance
+com.heaton.advertisersdk.proxy.RequestProxy: java.lang.Object receiver
+com.heaton.advertisersdk.proxy.RequestProxy: RequestProxy()
+com.heaton.advertisersdk.proxy.RequestProxy: com.heaton.advertisersdk.proxy.RequestProxy getRequestProxy()
+com.heaton.advertisersdk.proxy.RequestProxy: void <clinit>()
+com.heaton.advertisersdk.proxy.RequestProxy: java.lang.Object bindProxy(android.content.Context,java.lang.Object)
+com.heaton.advertisersdk.proxy.RequestProxy: java.lang.Object invoke(java.lang.Object,java.lang.reflect.Method,java.lang.Object[])
+com.heaton.advertisersdk.request.AdvertiserRequest
+com.heaton.advertisersdk.request.AdvertiserRequest: java.lang.String TAG
+com.heaton.advertisersdk.request.AdvertiserRequest: int DEFAULT_CHANNEL
+com.heaton.advertisersdk.request.AdvertiserRequest: android.os.Handler handler
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.BluetoothAdapter bluetoothAdapter
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.BluetoothLeAdvertiser advertiser
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseSettings advertiseSettings
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseData advertiseData
+com.heaton.advertisersdk.request.AdvertiserRequest: byte[] calculatedPayload
+com.heaton.advertisersdk.request.AdvertiserRequest: byte[] pairload
+com.heaton.advertisersdk.request.AdvertiserRequest: java.lang.Runnable stopAvertiseRunnable
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseCallback mAdvertiseCallback
+com.heaton.advertisersdk.request.AdvertiserRequest: AdvertiserRequest()
+com.heaton.advertisersdk.request.AdvertiserRequest: void resetDiscover(com.heaton.advertisersdk.AdvertiserDevice)
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseCallback access$000(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.BluetoothLeAdvertiser access$100(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest: byte[] access$200(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseData access$302(com.heaton.advertisersdk.request.AdvertiserRequest,android.bluetooth.le.AdvertiseData)
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseSettings access$400(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest: android.bluetooth.le.AdvertiseData access$300(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest: void startAdvertising(byte[],int)
+com.heaton.advertisersdk.request.AdvertiserRequest: void startAdvertising(byte[])
+com.heaton.advertisersdk.request.AdvertiserRequest: void stopAdvertising()
+com.heaton.advertisersdk.request.AdvertiserRequest: void stopAdvertising(java.lang.Long)
+com.heaton.advertisersdk.request.AdvertiserRequest: void discoverDevice(com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
+com.heaton.advertisersdk.request.AdvertiserRequest: void connectDevice(com.heaton.advertisersdk.AdvertiserDevice,com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
+com.heaton.advertisersdk.request.AdvertiserRequest: void retryConnect()
+com.heaton.advertisersdk.request.AdvertiserRequest$1
+com.heaton.advertisersdk.request.AdvertiserRequest$1: byte[] val$payload
+com.heaton.advertisersdk.request.AdvertiserRequest$1: int val$bleChannel
+com.heaton.advertisersdk.request.AdvertiserRequest$1: com.heaton.advertisersdk.request.AdvertiserRequest this$0
+com.heaton.advertisersdk.request.AdvertiserRequest$1: AdvertiserRequest$1(com.heaton.advertisersdk.request.AdvertiserRequest,byte[],int)
+com.heaton.advertisersdk.request.AdvertiserRequest$1: void run()
+com.heaton.advertisersdk.request.AdvertiserRequest$2
+com.heaton.advertisersdk.request.AdvertiserRequest$2: com.heaton.advertisersdk.request.AdvertiserRequest this$0
+com.heaton.advertisersdk.request.AdvertiserRequest$2: AdvertiserRequest$2(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest$2: void run()
+com.heaton.advertisersdk.request.AdvertiserRequest$3
+com.heaton.advertisersdk.request.AdvertiserRequest$3: com.heaton.advertisersdk.request.AdvertiserRequest this$0
+com.heaton.advertisersdk.request.AdvertiserRequest$3: AdvertiserRequest$3(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest$3: void run()
+com.heaton.advertisersdk.request.AdvertiserRequest$4
+com.heaton.advertisersdk.request.AdvertiserRequest$4: com.heaton.advertisersdk.request.AdvertiserRequest this$0
+com.heaton.advertisersdk.request.AdvertiserRequest$4: AdvertiserRequest$4(com.heaton.advertisersdk.request.AdvertiserRequest)
+com.heaton.advertisersdk.request.AdvertiserRequest$4: void onStartSuccess(android.bluetooth.le.AdvertiseSettings)
+com.heaton.advertisersdk.request.AdvertiserRequest$4: void onStartFailure(int)
+com.heaton.advertisersdk.request.Implement
+com.heaton.advertisersdk.request.Implement: java.lang.Class value()
+com.heaton.advertisersdk.request.ParseRequest
+com.heaton.advertisersdk.request.ParseRequest: java.lang.String TAG
+com.heaton.advertisersdk.request.ParseRequest: int BLE_GAP_AD_TYPE_FLAGS
+com.heaton.advertisersdk.request.ParseRequest: int BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_COMPLETE
+com.heaton.advertisersdk.request.ParseRequest: int BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA
+com.heaton.advertisersdk.request.ParseRequest: long SINGLE_CONNECT_TIME
+com.heaton.advertisersdk.request.ParseRequest: com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback advertiserDiscoverCallback
+com.heaton.advertisersdk.request.ParseRequest: com.heaton.advertisersdk.callback.AdvertiserConnectCallback advertiserConnectCallback
+com.heaton.advertisersdk.request.ParseRequest: android.util.SparseArray records
+com.heaton.advertisersdk.request.ParseRequest: java.util.List devicePool
+com.heaton.advertisersdk.request.ParseRequest: byte[] avertiseProductCode
+com.heaton.advertisersdk.request.ParseRequest: byte[] randomCode
+com.heaton.advertisersdk.request.ParseRequest: int retryCount
+com.heaton.advertisersdk.request.ParseRequest: android.os.Handler handler
+com.heaton.advertisersdk.request.ParseRequest: java.lang.Runnable discoverStopRunnable
+com.heaton.advertisersdk.request.ParseRequest: java.lang.Runnable retryRunnable
+com.heaton.advertisersdk.request.ParseRequest: ParseRequest()
+com.heaton.advertisersdk.request.ParseRequest: boolean isOwnProduct(byte[])
+com.heaton.advertisersdk.request.ParseRequest: void setDeviceValue(com.heaton.advertisersdk.AdvertiserDevice,byte[])
+com.heaton.advertisersdk.request.ParseRequest: com.heaton.advertisersdk.AdvertiserDevice takeDevicePool(com.heaton.advertisersdk.AdvertiserDevice)
+com.heaton.advertisersdk.request.ParseRequest: com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback access$000(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest: int access$100(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest: int access$108(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest: android.os.Handler access$200(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest: java.lang.Runnable access$300(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest: com.heaton.advertisersdk.callback.AdvertiserConnectCallback access$400(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest: void setAvertiseDiscoverCallback(com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback)
+com.heaton.advertisersdk.request.ParseRequest: void setAvertiseConnectCallback(com.heaton.advertisersdk.callback.AdvertiserConnectCallback)
+com.heaton.advertisersdk.request.ParseRequest: void parseScanRecord(com.heaton.advertisersdk.AdvertiserDevice,byte[],com.heaton.advertisersdk.callback.AdvertiserScanCallback)
+com.heaton.advertisersdk.request.ParseRequest$1
+com.heaton.advertisersdk.request.ParseRequest$1: com.heaton.advertisersdk.request.ParseRequest this$0
+com.heaton.advertisersdk.request.ParseRequest$1: ParseRequest$1(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest$1: void run()
+com.heaton.advertisersdk.request.ParseRequest$2
+com.heaton.advertisersdk.request.ParseRequest$2: com.heaton.advertisersdk.request.ParseRequest this$0
+com.heaton.advertisersdk.request.ParseRequest$2: ParseRequest$2(com.heaton.advertisersdk.request.ParseRequest)
+com.heaton.advertisersdk.request.ParseRequest$2: void run()
+com.heaton.advertisersdk.request.Rproxy
+com.heaton.advertisersdk.request.Rproxy: com.heaton.advertisersdk.request.Rproxy s_instance
+com.heaton.advertisersdk.request.Rproxy: java.util.Map mRequestObjs
+com.heaton.advertisersdk.request.Rproxy: com.heaton.advertisersdk.request.Rproxy getProxy()
+com.heaton.advertisersdk.request.Rproxy: Rproxy()
+com.heaton.advertisersdk.request.Rproxy: java.util.List getRequestsClass(android.content.Context,java.lang.String)
+com.heaton.advertisersdk.request.Rproxy: void <clinit>()
+com.heaton.advertisersdk.request.Rproxy: void init(android.content.Context)
+com.heaton.advertisersdk.request.Rproxy: java.lang.Object getRequest(java.lang.Class)
+com.heaton.advertisersdk.request.ScanRequest
+com.heaton.advertisersdk.request.ScanRequest: java.lang.String TAG
+com.heaton.advertisersdk.request.ScanRequest: boolean scanning
+com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.BluetoothAdapter bluetoothAdapter
+com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.le.BluetoothLeScanner scanner
+com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.le.ScanSettings scanSettings
+com.heaton.advertisersdk.request.ScanRequest: java.util.List filters
+com.heaton.advertisersdk.request.ScanRequest: com.heaton.advertisersdk.callback.AdvertiserScanCallback scanCallback
+com.heaton.advertisersdk.request.ScanRequest: java.util.ArrayList scanDevices
+com.heaton.advertisersdk.request.ScanRequest: com.heaton.advertisersdk.request.ParseRequest parseRequest
+com.heaton.advertisersdk.request.ScanRequest: android.os.Handler handler
+com.heaton.advertisersdk.request.ScanRequest: java.lang.Runnable stopRunnble
+com.heaton.advertisersdk.request.ScanRequest: android.bluetooth.le.ScanCallback mScannerCallback
+com.heaton.advertisersdk.request.ScanRequest: ScanRequest()
+com.heaton.advertisersdk.request.ScanRequest: com.heaton.advertisersdk.AdvertiserDevice getDevice(java.lang.String)
+com.heaton.advertisersdk.request.ScanRequest: com.heaton.advertisersdk.AdvertiserDevice access$000(com.heaton.advertisersdk.request.ScanRequest,java.lang.String)
+com.heaton.advertisersdk.request.ScanRequest: java.util.ArrayList access$100(com.heaton.advertisersdk.request.ScanRequest)
+com.heaton.advertisersdk.request.ScanRequest: com.heaton.advertisersdk.callback.AdvertiserScanCallback access$200(com.heaton.advertisersdk.request.ScanRequest)
+com.heaton.advertisersdk.request.ScanRequest: com.heaton.advertisersdk.request.ParseRequest access$300(com.heaton.advertisersdk.request.ScanRequest)
+com.heaton.advertisersdk.request.ScanRequest: void startScan(com.heaton.advertisersdk.callback.AdvertiserScanCallback)
+com.heaton.advertisersdk.request.ScanRequest: void startScan()
+com.heaton.advertisersdk.request.ScanRequest: void stopScan()
+com.heaton.advertisersdk.request.ScanRequest: boolean isScanning()
+com.heaton.advertisersdk.request.ScanRequest$1
+com.heaton.advertisersdk.request.ScanRequest$1: com.heaton.advertisersdk.request.ScanRequest this$0
+com.heaton.advertisersdk.request.ScanRequest$1: ScanRequest$1(com.heaton.advertisersdk.request.ScanRequest)
+com.heaton.advertisersdk.request.ScanRequest$1: void run()
+com.heaton.advertisersdk.request.ScanRequest$2
+com.heaton.advertisersdk.request.ScanRequest$2: com.heaton.advertisersdk.request.ScanRequest this$0
+com.heaton.advertisersdk.request.ScanRequest$2: ScanRequest$2(com.heaton.advertisersdk.request.ScanRequest)
+com.heaton.advertisersdk.request.ScanRequest$2: void onScanResult(int,android.bluetooth.le.ScanResult)
+com.heaton.advertisersdk.request.ScanRequest$2: void onBatchScanResults(java.util.List)
+com.heaton.advertisersdk.request.ScanRequest$2: void onScanFailed(int)
+com.heaton.advertisersdk.utils.ByteUtils
+com.heaton.advertisersdk.utils.ByteUtils: ByteUtils()
+com.heaton.advertisersdk.utils.ByteUtils: short bytes2Short2(byte[])
+com.heaton.advertisersdk.utils.ByteUtils: java.lang.String BinaryToHexString(byte[])
+com.heaton.advertisersdk.utils.ByteUtils: byte[] short2Bytes(short)
+com.heaton.advertisersdk.utils.ByteUtils: byte[] int2byte(int)
+com.heaton.advertisersdk.utils.ByteUtils: int byte2int(byte[])
+com.heaton.advertisersdk.utils.ByteUtils: java.lang.String byteArrayToHexStr(byte[])
+com.heaton.advertisersdk.utils.ByteUtils: byte[] hexStrToByteArray(java.lang.String)
 wireless.algorithm.io.cshsoft.a2_4gcrytonlib.WirelessEncoder
 wireless.algorithm.io.cshsoft.a2_4gcrytonlib.WirelessEncoder: void payload(int,byte[],byte[])
 wireless.algorithm.io.cshsoft.a2_4gcrytonlib.WirelessEncoder: boolean cipher(byte[],boolean)

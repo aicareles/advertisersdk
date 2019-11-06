@@ -3,6 +3,7 @@ package cn.com.heaton.avertisetest;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,12 +12,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.heaton.advertisersdk.AdvertiserClient;
-import cn.com.heaton.advertisersdk.AdvertiserDevice;
-import cn.com.heaton.advertisersdk.AdvertiserLog;
-import cn.com.heaton.advertisersdk.callback.AdvertiserScanCallback;
-import cn.com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback;
-import cn.com.heaton.advertisersdk.callback.AdvertiserConnectCallback;
+import com.heaton.advertisersdk.AdvertiserClient;
+import com.heaton.advertisersdk.AdvertiserDevice;
+import com.heaton.advertisersdk.AdvertiserLog;
+import com.heaton.advertisersdk.callback.AdvertiserScanCallback;
+import com.heaton.advertisersdk.callback.AdvertiserDiscoverCallback;
+import com.heaton.advertisersdk.callback.AdvertiserConnectCallback;
 import cn.com.heaton.avertisetest.adapter.DeviceAdapter;
 import cn.com.heaton.avertisetest.base.BaseDialog;
 
@@ -87,7 +88,7 @@ public class ConnectDialog extends BaseDialog {
             @Override
             public void run() {
                 mClient.startScan();
-                mClient.connectDevice(device, advertiserConnectCallback);
+                mClient.connect(device, advertiserConnectCallback);
             }
         },100);//500
         showDialog();
@@ -116,7 +117,7 @@ public class ConnectDialog extends BaseDialog {
         mList.clear();
         mAdapter.notifyDataSetChanged();
         mClient.startScan(scanCallback);
-        mClient.searchDevice(advertiserDiscoverCallback);
+        mClient.search(advertiserDiscoverCallback);
     }
 
     /**

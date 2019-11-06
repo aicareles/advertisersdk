@@ -1,7 +1,7 @@
 package cn.com.heaton.avertisetest.app;
 
-import cn.com.heaton.advertisersdk.interceptor.ParseStrategy;
-import cn.com.heaton.advertisersdk.interceptor.Strategy;
+import com.heaton.advertisersdk.interceptor.ParseStrategy;
+import com.heaton.advertisersdk.interceptor.Strategy;
 
 public class LogParseStrategy implements ParseStrategy {
 

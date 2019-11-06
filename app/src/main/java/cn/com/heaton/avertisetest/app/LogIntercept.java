@@ -2,8 +2,8 @@ package cn.com.heaton.avertisetest.app;
 
 import android.util.Log;
 
-import cn.com.heaton.advertisersdk.interceptor.Interceptor;
-import cn.com.heaton.advertisersdk.interceptor.Payload;
+import com.heaton.advertisersdk.interceptor.Interceptor;
+import com.heaton.advertisersdk.interceptor.Payload;
 
 public class LogIntercept implements Interceptor {
     private static final String TAG = "LogIntercept";
